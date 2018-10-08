@@ -1,0 +1,21 @@
+<div style="margin-bottom: 16px;">
+  <button nz-button [nzType]="'primary'" (click)="addRoleModal()">
+    新增角色
+  </button>
+</div>
+<nz-table [nzData]="roleList">
+  <thead>
+  <tr>
+    <th>角色名</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let role of roleList">
+    <td>{{role.name}}</td>
+    <td>
+      <a (click)="createModal(role.id)">修改</a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

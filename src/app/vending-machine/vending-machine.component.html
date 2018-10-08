@@ -1,0 +1,26 @@
+<nz-table [nzData]="machineList">
+  <thead>
+    <tr>
+      <th>序号</th>
+      <th>地点</th>
+      <th>状态</th>
+      <th>负责人</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let machine of machineList">
+      <td>
+        {{machine.serial}}
+      </td>
+      <td>
+        {{machine.location}}
+      </td>
+      <td>
+        {{machine.getStatus()}}
+      </td>
+      <td>
+        {{machine.master.name}}
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

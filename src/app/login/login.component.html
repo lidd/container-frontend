@@ -1,0 +1,32 @@
+<div class="login-background">
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" class="login-form">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group nzPrefixIcon="anticon anticon-user" class="login-form-input">
+            <input type="text" nz-input formControlName="username" placeholder="用户名">
+          </nz-input-group>
+          <nz-form-explain *ngIf="validateForm.get('username').dirty && validateForm.get('username').errors">
+            请输入用户名
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group nzPrefixIcon="anticon anticon-lock" class="login-form-button">
+            <input type="password" nz-input formControlName="password" placeholder="密码">
+          </nz-input-group>
+          <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">
+            请输入密码
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <!--<label nz-checkbox formControlName="remember">-->
+          <!--<span>Remember me</span>-->
+          <!--</label>-->
+          <button nz-button class="login-form-button" [nzType]="'primary'">Log in</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+</div>

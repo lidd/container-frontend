@@ -1,0 +1,83 @@
+<div style="margin-bottom: 16px;">
+  <button nz-button [nzType]="'primary'" (click)="addUserModal()">
+    新增用户
+  </button>
+</div>
+<nz-table #userTable [nzData]="userList" [nzBordered]="true">
+  <thead>
+  <tr>
+    <th nzWidth = "25%">姓名</th>
+    <th nzWidth = "30%">电话</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of userTable.data">
+    <td>
+      <div class="editable-cell">
+        <div class="editable-cell-text-wrapper">
+          <ng-container *ngIf="!editCache[user.id].edit">
+            {{user.name}}
+          </ng-container>
+          <ng-container *ngIf="editCache[user.id].edit">
+            <input type="text" nz-input [(ngModel)]="editCache[user.id].user.name">
+          </ng-container>
+        </div>
+      </div>
+    </td>
+    <td>
+      <ng-container *ngIf="!editCache[user.id].edit">
+        {{user.phone}}
+      </ng-container>
+      <ng-container *ngIf="editCache[user.id].edit">
+        <input type="text" nz-input [(ngModel)]="editCache[user.id].user.phone">
+      </ng-container>
+    </td>
+    <td>
+      <div class="editable-row-operations">
+        <ng-container *ngIf="!editCache[user.id].edit">
+          <a (click)="startEdit(user.id)">编辑</a>
+        </ng-container>
+        <ng-container *ngIf="editCache[user.id].edit">
+          <a (click)="saveEdit(user.id)">保存</a>
+          <a (click)="cancelEdit(user.id)">取消</a>
+        </ng-container>
+        <nz-divider [nzType]="'vertical'"></nz-divider>
+        <a (click)="showAuthModal(user.id)">授权</a>
+        <nz-divider [nzType]="'vertical'"></nz-divider>
+        <a (click)="showUserDetail(user.id)">详情</a>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+
+<nz-drawer [nzVisible]="drawerVisible" [nzWidth]="640" [nzClosable]="false" (nzOnClose)="closeDrawer()">
+  <p class="title" style=" margin-bottom: 24px;">个人信息</p>
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <div class="item-wrap">
+        <p class="label">姓名:</p>{{queriedUser.name}}
+      </div>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <div class="item-wrap">
+        <p class="label">电话:</p>{{queriedUser.phone}}
+      </div>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <div class="item-wrap">
+        <p class="label">角色:</p>
+        <div *ngIf="queriedUser.roles">
+          <nz-tag *ngFor="let role of queriedUser.roles">
+            {{role.name}}
+          </nz-tag>
+        </div>
+      </div>
+    </div>
+  </div>
+</nz-drawer>
+

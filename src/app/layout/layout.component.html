@@ -1,0 +1,38 @@
+<nz-layout class="full">
+  <nz-sider>
+    <div class="logo">
+      <div>你好，{{currentUser.name}}</div>
+      <a style="float: right;padding-right: 5px" (click)="logout()"><i class="anticon anticon-logout"></i>注销</a>
+    </div>
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'">
+      <li nz-menu-item *ngFor="let menu of menusWithoutChildren">
+        <span>
+          <i [ngClass]="[menu.icon]"></i>
+          <span class="nav-text">
+            <a (click)="updateBreadcrumb(menu.id)" [routerLink]="[menu.url]">{{menu.name}}</a>
+          </span>
+        </span>
+      </li>
+      <li nz-submenu *ngFor="let menu of menusWithChildren">
+        <span title><i [ngClass]="[menu.icon]"></i><span
+          class="nav-text">{{menu.name}}</span></span>
+        <ul>
+          <li nz-menu-item *ngFor="let child of menu.children">
+            <a [routerLink]="[child.url]" (click)="updateBreadcrumb(child.id)">{{child.name}}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-content style="margin:0 16px;">
+      <nz-breadcrumb style="margin:16px 0;">
+        <nz-breadcrumb-item *ngFor="let item of breadcrumbs">{{item}}</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <div class="ant-layout-content content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+    <nz-footer style="text-align: center;">盒饭自动贩卖机管理系统</nz-footer>
+  </nz-layout>
+</nz-layout>
