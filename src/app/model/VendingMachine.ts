@@ -1,6 +1,10 @@
 import {User} from './User';
+import {Goods} from './Goods';
 
 export class VendingMachine {
+
+  id: number;
+
   serial: string;
 
   location: string;
@@ -9,16 +13,7 @@ export class VendingMachine {
 
   updateTime: number;
 
-  master: User;
+  goods: Array<Goods>;
 
-  getStatus(): string {
-    switch (this.status) {
-      case 1000:
-        return '在线';
-      case 9999:
-        return '离线';
-      default:
-        return '未知';
-    }
-  }
+  master: User;
 }

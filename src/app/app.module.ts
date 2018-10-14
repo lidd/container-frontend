@@ -17,6 +17,7 @@ import {AddUserFormComponent} from './add-user-form/add-user-form.component';
 import {AddRoleFormComponent} from './add-role-form/add-role-form.component';
 import { VendingMachineComponent } from './vending-machine/vending-machine.component';
 import { GoodsTableComponent } from './goods-table/goods-table.component';
+import { AddMachineFormComponent } from './add-machine-form/add-machine-form.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { GoodsTableComponent } from './goods-table/goods-table.component';
     AddRoleFormComponent,
     VendingMachineComponent,
     GoodsTableComponent,
+    AddMachineFormComponent,
   ],
   imports: [
     BrowserModule,

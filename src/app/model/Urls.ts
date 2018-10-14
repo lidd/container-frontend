@@ -12,4 +12,5 @@ export class Urls {
   static user_add = '/user/add';
   static role_authorize = '/role/authorize';
   static role_add = '/role/save';
+  static machine_list = '/machine/list';
 }
