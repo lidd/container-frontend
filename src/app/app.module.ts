@@ -15,9 +15,9 @@ import {RoleTableComponent} from './role-table/role-table.component';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {AddUserFormComponent} from './add-user-form/add-user-form.component';
 import {AddRoleFormComponent} from './add-role-form/add-role-form.component';
-import { VendingMachineComponent } from './vending-machine/vending-machine.component';
-import { GoodsTableComponent } from './goods-table/goods-table.component';
-import { AddMachineFormComponent } from './add-machine-form/add-machine-form.component';
+import {VendingMachineComponent} from './vending-machine/vending-machine.component';
+import {GoodsTableComponent} from './goods-table/goods-table.component';
+import {AddMachineFormComponent} from './add-machine-form/add-machine-form.component';
 
 
 @NgModule({
@@ -48,7 +48,12 @@ import { AddMachineFormComponent } from './add-machine-form/add-machine-form.com
     useClass: HashLocationStrategy
   }],
   bootstrap: [AppComponent],
-  entryComponents: [AuthTreeComponent, AddUserFormComponent, AddRoleFormComponent]
+  entryComponents: [
+    AuthTreeComponent,
+    AddUserFormComponent,
+    AddRoleFormComponent,
+    AddMachineFormComponent
+  ]
 })
 export class AppModule {
 }

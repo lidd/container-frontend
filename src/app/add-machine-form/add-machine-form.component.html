@@ -12,21 +12,35 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSpan]="7" [nzRequired]="true">地址</nz-form-label>
-    <nz-form-control [nzSpan]="12" [nzHasFeedback]="true">
-      <input nz-input formControlName="location" placeholder="请输入所在地址">
+    <nz-form-label [nzSpan]="7">地址</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input nz-input [formControlName]="'location'" placeholder="请输入所在地址">
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSpan]="7" [nzRequired]="true">负责人</nz-form-label>
-    <nz-form-control [nzSpan]="12" [nzHasFeedback]="true">
-      <nz-select></nz-select>
+    <nz-form-control [nzSpan]="12">
+      <nz-select [formControlName]="'master'" [nzShowSearch]="true" [nzServerSearch]="true" (nzOnSearch)="onMasterSearch($event)">
+        <ng-container *ngFor="let o of users">
+          <nz-option *ngIf="!isMasterLoading" [nzValue]="o.id" [nzLabel]="o.name"></nz-option>
+        </ng-container>
+        <nz-option *ngIf="isMasterLoading" [nzDisabled]="true" [nzCustomContent]="false">
+          <i class="anticon anticon-loading anticon-spin loading-icon"></i> Loading...
+        </nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSpan]="7" [nzRequired]="true">所属商户</nz-form-label>
-    <nz-form-control [nzSpan]="12" [nzHasFeedback]="true">
-      <nz-select></nz-select>
+    <nz-form-control [nzSpan]="12">
+      <nz-select [formControlName]="'merchant'" [nzShowSearch]="true" [nzServerSearch]="true" (nzOnSearch)="onMerchantSearch($event)">
+        <ng-container *ngFor="let o of merchants">
+          <nz-option *ngIf="!isMerchantLoading" [nzValue]="o.id" [nzLabel]="o.name"></nz-option>
+        </ng-container>
+        <nz-option *ngIf="isMerchantLoading" [nzDisabled]="true" [nzCustomContent]="false">
+          <i class="anticon anticon-loading anticon-spin loading-icon"></i> Loading...
+        </nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>

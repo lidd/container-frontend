@@ -1,19 +1,22 @@
 import {User} from './User';
 import {Goods} from './Goods';
+import {Merchant} from './Merchant';
 
 export class VendingMachine {
 
-  id: number;
+  id?: number;
 
-  serial: string;
+  serial?: string;
 
-  location: string;
+  location?: string;
 
-  status: number;
+  status?: number;
 
-  updateTime: number;
+  updateTime?: number;
 
-  goods: Array<Goods>;
+  goods?: Array<Goods>;
 
-  master: User;
+  master?: User;
+
+  merchant?: Merchant;
 }

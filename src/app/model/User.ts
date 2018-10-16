@@ -1,9 +1,9 @@
 import {Role} from './Role';
 
 export class User {
-  id: number;
+  id?: number;
 
-  name: string;
+  name?: string;
 
   phone?: string;
 

@@ -33,7 +33,7 @@ export class UserService {
   }
 
   queryUser(id: number): Observable<BaseResponse> {
-    return this.http.get<BaseResponse>(Urls.user_query, {params: {id: id.toString()}});
+    return this.http.get<BaseResponse>(Urls.user_exact_query, {params: {id: id.toString()}});
   }
 
   checkFromSession(): Observable<BaseResponse> {
@@ -58,7 +58,11 @@ export class UserService {
     return this.http.post<BaseResponse>(Urls.user_add, {name: name, phone: phone, password: password, gender: gender});
   }
 
-  getUserByName(name: string): Observable<BaseResponse> {
-    return this.http.get<BaseResponse>(Urls.user_query, {params: {name: name}});
+  validUsername(name: string): Observable<BaseResponse> {
+    return this.http.get<BaseResponse>(Urls.username_valid, {params: {name: name}});
+  }
+
+  getUserByNameLike(name: string): Observable<BaseResponse> {
+    return this.http.get<BaseResponse>(Urls.user_name_like_query, {params: {name: name}});
   }
 }

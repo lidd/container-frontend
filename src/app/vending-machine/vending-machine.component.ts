@@ -1,7 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {VendingMachine} from '../model/VendingMachine';
 import {VendingMachineService} from '../shared/vending-machine.service';
-import {NzNotificationService} from 'ng-zorro-antd';
+import {ModalOptionsForService, NzModalService, NzNotificationService} from 'ng-zorro-antd';
+import {AddUserFormComponent} from '../add-user-form/add-user-form.component';
+import {Cmd} from '../model/Cmd';
+import {AddMachineFormComponent} from '../add-machine-form/add-machine-form.component';
+import {RefreshEmitterService} from '../shared/refresh-emitter.service';
 
 @Component({
   selector: 'app-vending-machine',
@@ -10,7 +14,10 @@ import {NzNotificationService} from 'ng-zorro-antd';
 })
 export class VendingMachineComponent implements OnInit, OnDestroy {
 
-  constructor(private vendingMachineService: VendingMachineService, private notification: NzNotificationService) {
+  constructor(private vendingMachineService: VendingMachineService,
+              private nzModalService:NzModalService,
+              private notification: NzNotificationService,
+              private refreshEmitter:RefreshEmitterService) {
   }
 
   machineList: Array<VendingMachine> = [];
@@ -47,5 +54,23 @@ export class VendingMachineComponent implements OnInit, OnDestroy {
     if (this.timer) {
       clearInterval(this.timer);
     }
+  }
+
+  addMachineModal() {
+    let option: ModalOptionsForService = {
+      nzVisible: true,
+      nzTitle: '新增机器',
+      nzContent: AddMachineFormComponent,
+      nzFooter: null
+    };
+    let modalRef = this.nzModalService.create(option);
+    this.refreshEmitter.subscribe(e => {
+      if (e.name == Cmd.close_machine_add_form) {
+        modalRef.destroy();
+      }
+      if (e.name == Cmd.refresh_machine_table) {
+        this.initMachineList();
+      }
+    });
   }
 }

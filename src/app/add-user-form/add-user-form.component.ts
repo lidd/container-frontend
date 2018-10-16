@@ -49,7 +49,7 @@ export class AddUserFormComponent implements OnInit {
     control.valueChanges.pipe(
       debounceTime(5000),
       distinctUntilChanged(),
-      flatMap(value => this.userService.getUserByName(value))).subscribe(res => {
+      flatMap(value => this.userService.validUsername(value))).subscribe(res => {
       if (res.code == 1000) {
         if (res.data) {
           observer.next({error: true, duplicated: true});
