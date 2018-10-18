@@ -1,8 +1,10 @@
 <nz-layout class="full">
   <nz-sider>
     <div class="logo">
-      <div>你好，{{currentUser.name}}</div>
-      <a style="float: right;padding-right: 5px" (click)="logout()"><i class="anticon anticon-logout"></i>注销</a>
+      <div style="padding-top: 20px">
+        <i class="anticon anticon-smile-o"></i>&nbsp;&nbsp;{{currentUser.name}}
+        <i style="float: right;padding-right: 10px" class="anticon anticon-logout" (click)="logout()"></i>
+      </div>
     </div>
     <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'">
       <li nz-menu-item *ngFor="let menu of menusWithoutChildren">

@@ -5,7 +5,8 @@ import {LayoutComponent} from './layout/layout.component';
 import {UserTableComponent} from './user-table/user-table.component';
 import {LoginGuard} from './login/LoginGuard';
 import {RoleTableComponent} from './role-table/role-table.component';
-import {VendingMachineComponent} from './vending-machine/vending-machine.component';
+import {VendingMachineTableComponent} from './vending-machine-table/vending-machine-table.component';
+import {MerchantTableComponent} from './merchant-table/merchant-table.component';
 
 
 const routes: Routes = [{
@@ -16,14 +17,17 @@ const routes: Routes = [{
   path: 'home',
   component: LayoutComponent,
   children: [{
-    path: 'userTable',
+    path: 'user',
     component: UserTableComponent
   }, {
-    path: 'roleTable',
+    path: 'role',
     component: RoleTableComponent
   }, {
     path: 'monitor',
-    component: VendingMachineComponent
+    component: VendingMachineTableComponent
+  }, {
+    path:'merchant',
+    component: MerchantTableComponent
   }],
   canActivate: [LoginGuard]
 }, {

@@ -16,4 +16,8 @@ export class MerchantService {
   saveMerchant(value: Merchant): Observable<BaseResponse> {
     return this.http.post<BaseResponse>(Urls.merchant_save, value);
   }
+
+  getMerchantList():Observable<BaseResponse> {
+    return this.http.get<BaseResponse>(Urls.merchant_list);
+  }
 }

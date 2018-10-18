@@ -1,0 +1,75 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submit($event,validateForm.value)">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" [nzRequired]="true">商户名</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzHasFeedback]="true">
+      <input nz-input [formControlName]="'name'" placeholder="请输入商户名" [(ngModel)]="merchant.name">
+      <nz-form-explain
+        *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors || validateForm.get('name').pending ">
+        <ng-container *ngIf="validateForm.get('name').hasError('required')">
+          请输入商户名！
+        </ng-container>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">支付宝App Id</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input nz-input [formControlName]="'alipayAppId'" placeholder="请输入支付宝App Id" [(ngModel)]="merchant.alipayAppId">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">支付宝私钥</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input nz-input [formControlName]="'alipayPrivateKey'" placeholder="请输入支付宝私钥" [(ngModel)]="merchant.alipayPrivateKey">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">支付宝回调地址</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input nz-input [formControlName]="'alipayCallbackUrl'" placeholder="请输入支付宝回调地址" [(ngModel)]="merchant.alipayCallbackUrl">
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">微信App Id</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input nz-input [formControlName]="'wxAppId'" placeholder="请输入微信App Id" [(ngModel)]="merchant.wxAppId">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">微信商户号</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input nz-input [formControlName]="'wxMchId'" placeholder="请输入微信商户号" [(ngModel)]="merchant.wxMchId">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">微信App key</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input nz-input [formControlName]="'wxKey'" placeholder="请输入微信私钥" [(ngModel)]="merchant.wxKey">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">微信回调地址</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input nz-input [formControlName]="'wxCallbackUrl'" placeholder="请输入微信回调地址" [(ngModel)]="merchant.wxCallbackUrl">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">微信证书路径</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input nz-input [formControlName]="'wxCertPath'" placeholder="请输入微信证书路径" [(ngModel)]="merchant.wxCertPath">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">微信超时时长</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input nz-input [formControlName]="'wxConnectTimeout'" placeholder="请输入微信超时时长" [(ngModel)]="merchant.wxConnectTimeout">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button nz-button (click)="resetForm($event)">重置</button>
+      <button nz-button [nzType]="'primary'" [disabled]="!validateForm.valid" [nzLoading]="loading">确认</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

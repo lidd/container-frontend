@@ -15,9 +15,11 @@ import {RoleTableComponent} from './role-table/role-table.component';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {AddUserFormComponent} from './add-user-form/add-user-form.component';
 import {AddRoleFormComponent} from './add-role-form/add-role-form.component';
-import {VendingMachineComponent} from './vending-machine/vending-machine.component';
+import {VendingMachineTableComponent} from './vending-machine-table/vending-machine-table.component';
 import {GoodsTableComponent} from './goods-table/goods-table.component';
 import {AddMachineFormComponent} from './add-machine-form/add-machine-form.component';
+import { MerchantTableComponent } from './merchant-table/merchant-table.component';
+import { AddMerchantFormComponent } from './add-merchant-form/add-merchant-form.component';
 
 
 @NgModule({
@@ -30,9 +32,11 @@ import {AddMachineFormComponent} from './add-machine-form/add-machine-form.compo
     RoleTableComponent,
     AddUserFormComponent,
     AddRoleFormComponent,
-    VendingMachineComponent,
+    VendingMachineTableComponent,
     GoodsTableComponent,
     AddMachineFormComponent,
+    MerchantTableComponent,
+    AddMerchantFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +56,8 @@ import {AddMachineFormComponent} from './add-machine-form/add-machine-form.compo
     AuthTreeComponent,
     AddUserFormComponent,
     AddRoleFormComponent,
-    AddMachineFormComponent
+    AddMachineFormComponent,
+    AddMerchantFormComponent
   ]
 })
 export class AppModule {

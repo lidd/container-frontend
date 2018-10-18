@@ -9,7 +9,6 @@ import {BaseResponse} from '../model/BaseResponse';
 import {Urls} from '../model/Urls';
 import {HttpClient} from '@angular/common/http';
 import {Merchant} from '../model/Merchant';
-import {MerchantService} from '../shared/merchant.service';
 import {RefreshEmitterService} from '../shared/refresh-emitter.service';
 import {Cmd} from '../model/Cmd';
 import {VendingMachineService} from '../shared/vending-machine.service';

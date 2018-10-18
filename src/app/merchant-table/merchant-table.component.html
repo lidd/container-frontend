@@ -1,0 +1,31 @@
+<div style="margin-bottom: 16px;">
+  <button nz-button [nzType]="'primary'" (click)="addMerchantModal()">
+    新增售货机
+  </button>
+</div>
+<nz-table [nzData]="merchantList">
+  <thead>
+  <tr>
+    <th>商户名</th>
+    <th>支付宝</th>
+    <th>微信</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let merchant of merchantList">
+    <td>
+      {{merchant.name}}
+    </td>
+    <td>
+      {{merchant.alipayAppId}}
+    </td>
+    <td>
+      {{merchant.wxAppId}}
+    </td>
+    <td>
+      <a (click)="createEditModal(merchant)">编辑</a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

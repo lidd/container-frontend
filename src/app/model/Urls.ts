@@ -18,4 +18,5 @@ export class Urls {
   static merchant_name_like_query = '/merchant/name-like-query';
   static merchant_save = '/merchant/save';
   static machine_save = '/machine/save';
+  static merchant_list = '/merchant/list';
 }

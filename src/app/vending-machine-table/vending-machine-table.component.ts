@@ -2,17 +2,16 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {VendingMachine} from '../model/VendingMachine';
 import {VendingMachineService} from '../shared/vending-machine.service';
 import {ModalOptionsForService, NzModalService, NzNotificationService} from 'ng-zorro-antd';
-import {AddUserFormComponent} from '../add-user-form/add-user-form.component';
 import {Cmd} from '../model/Cmd';
 import {AddMachineFormComponent} from '../add-machine-form/add-machine-form.component';
 import {RefreshEmitterService} from '../shared/refresh-emitter.service';
 
 @Component({
   selector: 'app-vending-machine',
-  templateUrl: './vending-machine.component.html',
-  styleUrls: ['./vending-machine.component.css']
+  templateUrl: './vending-machine-table.component.html',
+  styleUrls: ['./vending-machine-table.component.css']
 })
-export class VendingMachineComponent implements OnInit, OnDestroy {
+export class VendingMachineTableComponent implements OnInit, OnDestroy {
 
   constructor(private vendingMachineService: VendingMachineService,
               private nzModalService:NzModalService,
