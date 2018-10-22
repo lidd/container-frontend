@@ -18,7 +18,7 @@ export class MerchantTableComponent implements OnInit {
               private refreshEmitter: RefreshEmitterService, private notification:NzNotificationService) {
   }
 
-  merchantList: Array<Merchant>;
+  merchantList: Array<Merchant> = [];
 
   ngOnInit() {
     this.loadMerchantList();

@@ -10,8 +10,8 @@
       <li nz-menu-item *ngFor="let menu of menusWithoutChildren">
         <span>
           <i [ngClass]="[menu.icon]"></i>
-          <span class="nav-text">
-            <a (click)="updateBreadcrumb(menu.id)" [routerLink]="[menu.url]">{{menu.name}}</a>
+          <span class="nav-text" (click)="updateBreadcrumb(menu.id)" [routerLink]="[menu.url]">
+            {{menu.name}}
           </span>
         </span>
       </li>
@@ -20,7 +20,7 @@
           class="nav-text">{{menu.name}}</span></span>
         <ul>
           <li nz-menu-item *ngFor="let child of menu.children">
-            <a [routerLink]="[child.url]" (click)="updateBreadcrumb(child.id)">{{child.name}}</a>
+            <span [routerLink]="[child.url]" (click)="updateBreadcrumb(child.id)">{{child.name}}</span>
           </li>
         </ul>
       </li>

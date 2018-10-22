@@ -1,0 +1,23 @@
+<div style="margin-bottom: 16px;">
+  <button nz-button [nzType]="'primary'" (click)="addGoodsDescModal()">
+    新增商品类型
+  </button>
+</div>
+<nz-table [nzData]="goodsDescList">
+  <thead>
+  <tr>
+    <th>商品描述</th>
+    <th>图片</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let goodsDesc of goodsDescList">
+    <td>
+      {{goodsDesc.description}}
+    </td>
+    <td>
+      <img [src]="goodsDesc.imageHash" [height]="100" (click)="showFullImg(goodsDesc)">
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

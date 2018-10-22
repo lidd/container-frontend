@@ -19,4 +19,6 @@ export class Urls {
   static merchant_save = '/merchant/save';
   static machine_save = '/machine/save';
   static merchant_list = '/merchant/list';
+  static goods_desc_list = '/goods-description/list';
+  static goods_desc_add = '/goods-description/add';
 }
