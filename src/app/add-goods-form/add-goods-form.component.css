@@ -1,6 +1,8 @@
 [nz-form] {
+  padding-top: 30px;
   max-width: 600px;
 }
+
 button {
   margin-left: 8px;
 }

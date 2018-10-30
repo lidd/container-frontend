@@ -10,4 +10,6 @@ export class Cmd {
   static close_merchant_add_form = 2007;
   static close_goods_desc_add_form = 2008;
   static refresh_goods_desc_table = 2009;
+  static close_goods_add_form = 2010;
+  static refresh_goods_table = 2011;
 }

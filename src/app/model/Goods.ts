@@ -1,3 +1,5 @@
+import {GoodsDescription} from './GoodsDescription';
+
 export class Goods {
   name: string;
 
@@ -5,5 +7,9 @@ export class Goods {
 
   createTime: number;
 
+  status:number;
+
   comment: string;
+
+  goodsDescription:GoodsDescription;
 }

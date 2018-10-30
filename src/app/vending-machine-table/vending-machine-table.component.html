@@ -8,6 +8,7 @@
     <tr>
       <th>序号</th>
       <th>地点</th>
+      <th>温度</th>
       <th>状态</th>
       <th>负责人</th>
     </tr>
@@ -19,6 +20,9 @@
       </td>
       <td>
         {{machine.location}}
+      </td>
+      <td>
+        {{machine.temperature * 0.1}}
       </td>
       <td>
         {{parseStatus(machine)}}

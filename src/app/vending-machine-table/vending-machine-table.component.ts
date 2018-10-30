@@ -5,6 +5,8 @@ import {ModalOptionsForService, NzModalService, NzNotificationService} from 'ng-
 import {Cmd} from '../model/Cmd';
 import {AddMachineFormComponent} from '../add-machine-form/add-machine-form.component';
 import {RefreshEmitterService} from '../shared/refresh-emitter.service';
+import {HttpClient} from '@angular/common/http';
+import {Urls} from '../model/Urls';
 
 @Component({
   selector: 'app-vending-machine',
@@ -14,9 +16,10 @@ import {RefreshEmitterService} from '../shared/refresh-emitter.service';
 export class VendingMachineTableComponent implements OnInit, OnDestroy {
 
   constructor(private vendingMachineService: VendingMachineService,
-              private nzModalService:NzModalService,
+              private nzModalService: NzModalService,
               private notification: NzNotificationService,
-              private refreshEmitter:RefreshEmitterService) {
+              private refreshEmitter: RefreshEmitterService,
+              private http:HttpClient) {
   }
 
   machineList: Array<VendingMachine> = [];
@@ -39,6 +42,10 @@ export class VendingMachineTableComponent implements OnInit, OnDestroy {
   }
 
   parseStatus(machine: VendingMachine): string {
+    if ((new Date().getTime() - machine.updateTime) > 40000) {
+      machine.status = 9999;
+      this.http.post(Urls.upload_machine_status, machine).subscribe(res => console.log(res));
+    }
     switch (machine.status) {
       case 1000:
         return '在线';

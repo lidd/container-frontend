@@ -16,7 +16,8 @@ export class AddGoodsDescFormComponent implements OnInit {
               private notification: NzNotificationService, private refreshEmitter: RefreshEmitterService
   ) {
     this.validateForm = this.fb.group({
-      description: ['', [Validators.required]]
+      description: ['', [Validators.required]],
+      price: ['', [Validators.required]],
     });
   }
 
@@ -26,7 +27,11 @@ export class AddGoodsDescFormComponent implements OnInit {
 
 
   beforeUpload = (file: UploadFile): boolean => {
-    this.fileList.push(file);
+    if (this.fileList.length == 1) {
+      this.fileList[0] = file;
+    } else {
+      this.fileList.push(file);
+    }
     return false;
   };
 
@@ -35,9 +40,6 @@ export class AddGoodsDescFormComponent implements OnInit {
   }
 
   submit($event, value) {
-    if (this.fileList.length == 0) {
-      return;
-    }
     $event.preventDefault();
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
@@ -47,6 +49,7 @@ export class AddGoodsDescFormComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', <any>this.fileList[0]);
     formData.append('description', value.description);
+    formData.append('price', (value.price * 100).toString());
     this.goodsService.saveGoodsDesc(formData).subscribe(res => {
       if (res.code == 1000) {
         this.notification.success('成功', '新增商品成功');

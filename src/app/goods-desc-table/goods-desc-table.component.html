@@ -3,10 +3,11 @@
     新增商品类型
   </button>
 </div>
-<nz-table [nzData]="goodsDescList">
+<nz-table [nzFrontPagination]="true" [nzPageSize]="4" [nzPageIndex]="1" [nzData]="goodsDescList">
   <thead>
   <tr>
     <th>商品描述</th>
+    <th>价格（元）</th>
     <th>图片</th>
   </tr>
   </thead>
@@ -15,6 +16,7 @@
     <td>
       {{goodsDesc.description}}
     </td>
+    <td>{{goodsDesc.price * 0.01}}</td>
     <td>
       <img [src]="goodsDesc.imageHash" [height]="100" (click)="showFullImg(goodsDesc)">
     </td>

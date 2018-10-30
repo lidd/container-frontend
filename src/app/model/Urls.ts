@@ -21,4 +21,7 @@ export class Urls {
   static merchant_list = '/merchant/list';
   static goods_desc_list = '/goods-description/list';
   static goods_desc_add = '/goods-description/add';
+  static goods_page = '/goods/page';
+  static goods_add = '/goods/add';
+  static upload_machine_status = '/machine/upload-status';
 }

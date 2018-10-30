@@ -22,6 +22,8 @@ import { MerchantTableComponent } from './merchant-table/merchant-table.componen
 import { AddMerchantFormComponent } from './add-merchant-form/add-merchant-form.component';
 import { GoodsDescTableComponent } from './goods-desc-table/goods-desc-table.component';
 import { AddGoodsDescFormComponent } from './add-goods-desc-form/add-goods-desc-form.component';
+import { GoodsOrderTableComponent } from './goods-order-table/goods-order-table.component';
+import { AddGoodsFormComponent } from './add-goods-form/add-goods-form.component';
 
 
 @NgModule({
@@ -41,6 +43,8 @@ import { AddGoodsDescFormComponent } from './add-goods-desc-form/add-goods-desc-
     AddMerchantFormComponent,
     GoodsDescTableComponent,
     AddGoodsDescFormComponent,
+    GoodsOrderTableComponent,
+    AddGoodsFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,7 +66,8 @@ import { AddGoodsDescFormComponent } from './add-goods-desc-form/add-goods-desc-
     AddRoleFormComponent,
     AddMachineFormComponent,
     AddMerchantFormComponent,
-    AddGoodsDescFormComponent
+    AddGoodsDescFormComponent,
+    AddGoodsFormComponent
   ]
 })
 export class AppModule {

@@ -14,6 +14,8 @@ export class VendingMachine {
 
   updateTime?: number;
 
+  temperature?: number;
+
   goods?: Array<Goods>;
 
   master?: User;
