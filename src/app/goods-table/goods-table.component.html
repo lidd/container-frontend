@@ -9,6 +9,7 @@
   <tr>
     <th>商品名称</th>
     <th>单价（元）</th>
+    <th>批次</th>
     <th>状态</th>
   </tr>
   </thead>
@@ -19,6 +20,9 @@
     </td>
     <td>
       {{goods.goodsDescription.price * 0.01}}
+    </td>
+    <td>
+      {{goods.batchNo}}
     </td>
     <td [ngSwitch]="goods.status">
       <span *ngSwitchCase="3000">未入库</span>

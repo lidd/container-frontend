@@ -27,4 +27,8 @@ export class GoodsService {
   addGoods(value: any): Observable<BaseResponse> {
     return this.http.post<BaseResponse>(Urls.goods_add, value);
   }
+
+  getOrderPage(page: number, size: number): Observable<BaseResponse> {
+    return this.http.get<BaseResponse>(Urls.order_page, {params: {page: page.toString(), size: size.toString()}});
+  }
 }

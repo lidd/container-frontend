@@ -15,6 +15,8 @@ export class GoodsDescTableComponent implements OnInit {
 
   goodsDescList: Array<GoodsDescription> = [];
 
+  pageSize = 4;
+
   constructor(private goodsService: GoodsService, private notification: NzNotificationService,
               private modalService: NzModalService, private refreshEmitter: RefreshEmitterService) {
   }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {GoodsService} from '../shared/goods.service';
 import {NzNotificationService} from 'ng-zorro-antd';
 import {RefreshEmitterService} from '../shared/refresh-emitter.service';

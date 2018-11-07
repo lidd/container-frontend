@@ -9,6 +9,7 @@ import {VendingMachineTableComponent} from './vending-machine-table/vending-mach
 import {MerchantTableComponent} from './merchant-table/merchant-table.component';
 import {GoodsDescTableComponent} from './goods-desc-table/goods-desc-table.component';
 import {GoodsTableComponent} from './goods-table/goods-table.component';
+import {GoodsOrderTableComponent} from './goods-order-table/goods-order-table.component';
 
 
 const routes: Routes = [{
@@ -36,6 +37,9 @@ const routes: Routes = [{
   },{
     path:'goods',
     component:GoodsTableComponent
+  },{
+    path:'order',
+    component:GoodsOrderTableComponent
   }],
   canActivate: [LoginGuard]
 }, {
