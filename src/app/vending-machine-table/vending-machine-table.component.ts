@@ -19,7 +19,7 @@ export class VendingMachineTableComponent implements OnInit, OnDestroy {
               private nzModalService: NzModalService,
               private notification: NzNotificationService,
               private refreshEmitter: RefreshEmitterService,
-              private http:HttpClient) {
+              private http: HttpClient) {
   }
 
   machineList: Array<VendingMachine> = [];
@@ -28,32 +28,24 @@ export class VendingMachineTableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initMachineList();
-    this.timer = setInterval(() => this.initMachineList(), 5000);
+    this.timer = setInterval(() => {
+      this.initMachineList();
+    }, 5000);
   }
 
   private initMachineList(): void {
     this.vendingMachineService.getMachines().subscribe(res => {
       if (res.code == 1000) {
         this.machineList = <Array<VendingMachine>>res.data;
+        for (let machine of this.machineList) {
+          if ((new Date().getTime() - machine.updateTime) > 40000) {
+            this.http.post(Urls.upload_machine_status, machine).subscribe(res => console.log(res));
+          }
+        }
       } else {
         this.notification.error('错误', `${res.code}: ${res.data}`);
       }
     });
-  }
-
-  parseStatus(machine: VendingMachine): string {
-    if ((new Date().getTime() - machine.updateTime) > 40000) {
-      machine.status = 9999;
-      this.http.post(Urls.upload_machine_status, machine).subscribe(res => console.log(res));
-    }
-    switch (machine.status) {
-      case 1000:
-        return '在线';
-      case 9999:
-        return '离线';
-      default:
-        return '未知';
-    }
   }
 
   ngOnDestroy(): void {

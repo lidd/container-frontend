@@ -24,8 +24,16 @@
       <td>
         {{machine.temperature * 0.1}}
       </td>
-      <td>
-        {{parseStatus(machine)}}
+      <td [ngSwitch]="machine.status">
+        <div *ngSwitchCase="1000">
+          在线
+        </div>
+        <div *ngSwitchCase="9999">
+          离线
+        </div>
+        <div *ngSwitchDefault>
+          未知
+        </div>
       </td>
       <td>
         {{machine.master.name}}
