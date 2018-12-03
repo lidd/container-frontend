@@ -31,4 +31,8 @@ export class GoodsService {
   getOrderPage(page: number, size: number): Observable<BaseResponse> {
     return this.http.get<BaseResponse>(Urls.order_page, {params: {page: page.toString(), size: size.toString()}});
   }
+
+  saveDeliveryman(selectedMan: any, selectedMachine: any, goods: Array<number>) {
+    return this.http.post<BaseResponse>(Urls.set_deliveryman, {userId: selectedMan, serial: selectedMachine, goodsIds: goods});
+  }
 }

@@ -1,20 +1,48 @@
 <div style="margin-bottom: 16px;">
-  <button nz-button [nzType]="'primary'" (click)="addGoodsModal()">
-    新增商品
-  </button>
+  <nz-button-group>
+    <button nz-button [nzType]="'primary'" (click)="addGoodsModal()">
+      新增商品
+    </button>
+    <button nz-button [nzType]="'default'" (click)="getGoodsPage(0, 10)">
+      显示全部
+    </button>
+    <button nz-button [nzType]="'default'" (click)="selectOfStatus(3000)">
+      待配送
+    </button>
+    <button nz-button [nzType]="'default'" (click)="selectOfStatus(4000)">
+      配送中
+    </button>
+    <button nz-button [nzType]="'default'" (click)="selectOfStatus(5000)">
+      售卖中
+    </button>
+    <button nz-button [nzType]="'default'" (click)="selectOfStatus(6000)">
+      已售出
+    </button>
+    <button nz-button [nzType]="'default'" (click)="selectOfStatus(7000)">
+      已回收
+    </button>
+    <button nz-button [nzType]="'primary'" [disabled]="!deliverymanDisable" (click)="setDeliverymanModal()">
+      设置配送员
+    </button>
+  </nz-button-group>
 </div>
-<nz-table [nzData]="goodsList" [(nzPageIndex)]="pageIndex" [nzFrontPagination]="false" [nzBordered]="true" [nzPageSize]="pageSize"
+<nz-table [nzData]="goodsList" [(nzPageIndex)]="pageIndex" [nzFrontPagination]="false" [nzBordered]="true"
+          [nzPageSize]="pageSize"
           [nzTotal]="totalElements" (nzPageIndexChange)="pageIndexChange()">
   <thead>
   <tr>
+    <th [nzWidth]="'62px'" [nzShowCheckbox]="true" [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate"
+        (nzCheckedChange)="checkAll($event)"></th>
     <th>商品名称</th>
     <th>单价（元）</th>
     <th>批次</th>
     <th>状态</th>
+    <th>配送员</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let goods of goodsList">
+    <td [nzShowCheckbox]="true" [(nzChecked)]="goods.checked" (nzCheckedChange)="refreshCheckStatus()"></td>
     <td>
       {{goods.goodsDescription.description}}
     </td>
@@ -25,12 +53,30 @@
       {{goods.batchNo}}
     </td>
     <td [ngSwitch]="goods.status">
-      <span *ngSwitchCase="3000">未入库</span>
-      <span *ngSwitchCase="3001">入库</span>
-      <span *ngSwitchCase="3002">售出</span>
-      <span *ngSwitchCase="3003">出库</span>
+      <span *ngSwitchCase="3000">待配送</span>
+      <span *ngSwitchCase="4000">配送中</span>
+      <span *ngSwitchCase="5000">待售出</span>
+      <span *ngSwitchCase="6000">已售出</span>
+      <span *ngSwitchCase="7000">出库</span>
       <span *ngSwitchDefault>未知</span>
+    </td>
+    <td>
+      <span *ngIf="goods.deliveryman">
+              {{goods.deliveryman.name}}
+      </span>
     </td>
   </tr>
   </tbody>
 </nz-table>
+
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="'设置配送员'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <span>选择配送员: </span>
+  <nz-select [nzSize]="'large'" style="width: 120px;" [(ngModel)]="selectedMan" [nzPlaceHolder]="'请选择'">
+    <nz-option *ngFor="let o of userList" [nzValue]="o.id" [nzLabel]="o.name"></nz-option>
+  </nz-select>
+  <br/>
+  <span>选择机柜: </span>
+  <nz-select [nzSize]="'large'" style="width: 120px;" [(ngModel)]="selectedMachine" [nzPlaceHolder]="'请选择'">
+    <nz-option *ngFor="let o of machineList" [nzValue]="o.id" [nzLabel]="o.serial"></nz-option>
+  </nz-select>
+</nz-modal>

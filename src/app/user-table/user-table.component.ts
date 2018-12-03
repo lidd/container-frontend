@@ -121,8 +121,7 @@ export class UserTableComponent implements OnInit {
   loadUserList(): void {
     this.userService.getUserList().subscribe(res => {
       if (res.code == 1000) {
-        let userPage = <Page>res.data;
-        this.userList = userPage.content;
+        this.userList = <Array<User>>res.data;
       }
       this.updateEditCache();
     });
