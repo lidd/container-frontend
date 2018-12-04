@@ -20,8 +20,8 @@ export class GoodsService {
     return this.http.post<BaseResponse>(Urls.goods_desc_add, goodsDesc);
   }
 
-  getGoodsPage(page: number, size: number): Observable<BaseResponse> {
-    return this.http.get<BaseResponse>(Urls.goods_page, {params: {page: page.toString(), size: size.toString()}});
+  getGoodsPage(page: number, size: number, status: number = 0): Observable<BaseResponse> {
+    return this.http.get<BaseResponse>(Urls.goods_page, {params: {page: page.toString(), size: size.toString(), status: status.toString()}});
   }
 
   addGoods(value: any): Observable<BaseResponse> {

@@ -57,8 +57,8 @@ export class GoodsTableComponent implements OnInit {
     });
   }
 
-  getGoodsPage(pageIndex: number, pageSize: number) {
-    this.goodsService.getGoodsPage(pageIndex, pageSize).subscribe(res => {
+  getGoodsPage(pageIndex: number, pageSize: number, status: number = 0) {
+    this.goodsService.getGoodsPage(pageIndex, pageSize, status).subscribe(res => {
       if (res.code == 1000) {
         let page: Page = <Page>res.data;
         this.goodsList = page.content;
@@ -129,6 +129,6 @@ export class GoodsTableComponent implements OnInit {
   }
 
   selectOfStatus(status:number) {
-
+    this.getGoodsPage(this.pageIndex, this.pageSize, status);
   }
 }
