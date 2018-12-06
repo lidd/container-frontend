@@ -28,8 +28,8 @@ export class GoodsService {
     return this.http.post<BaseResponse>(Urls.goods_add, value);
   }
 
-  getOrderPage(page: number, size: number): Observable<BaseResponse> {
-    return this.http.get<BaseResponse>(Urls.order_page, {params: {page: page.toString(), size: size.toString()}});
+  getOrderPage(params): Observable<BaseResponse> {
+    return this.http.get<BaseResponse>(Urls.order_page, {params: params});
   }
 
   saveDeliveryman(selectedMan: any, selectedMachine: any, goods: Array<number>) {
