@@ -5,6 +5,10 @@ import {NzNotificationService} from 'ng-zorro-antd';
 import {RefreshEmitterService} from '../shared/refresh-emitter.service';
 import {GoodsDescription} from '../model/GoodsDescription';
 import {Cmd} from '../model/Cmd';
+import {UserService} from '../shared/user.service';
+import {VendingMachineService} from '../shared/vending-machine.service';
+import {User} from '../model/User';
+import {VendingMachine} from '../model/VendingMachine';
 
 @Component({
   selector: 'app-add-goods-form',
@@ -17,25 +21,37 @@ export class AddGoodsFormComponent implements OnInit {
 
   goodsDescList = [];
 
+  userList = [];
+
+  machineList = [];
+
   loading = false;
 
-  controlsConfig = {};
+  controlsConfig:any = {};
 
   checkedGoods = [];
 
   constructor(private fb: FormBuilder, private goodsService: GoodsService,
-              private notification: NzNotificationService, private refreshEmitter: RefreshEmitterService
+              private notification: NzNotificationService, private refreshEmitter: RefreshEmitterService,
+              private userService: UserService, private machineService: VendingMachineService
   ) {
   }
 
   ngOnInit() {
     this.initGoodsDescList();
 
+    this.initDeliverymanAndMachine();
+
+    this.controlsConfig.deliverymanId = [];
+    this.controlsConfig.machineId = [];
+
     this.validateForm = this.fb.group(this.controlsConfig);
   }
 
   private updateControlsConfig(gd): void {
     this.controlsConfig[gd.value] = [];
+    this.controlsConfig.deliverymanId = [];
+    this.controlsConfig.machineId = [];
   }
 
 
@@ -89,6 +105,23 @@ export class AddGoodsFormComponent implements OnInit {
         this.refreshEmitter.emit({name: Cmd.close_goods_add_form});
       } else {
         this.notification.error('失败', `${res.code}: ${res.msg}`);
+      }
+    });
+  }
+
+  initDeliverymanAndMachine() {
+    this.userService.getUserList().subscribe(res => {
+      if (res.code === 1000) {
+        this.userList = <Array<any>>res.data;
+      } else {
+        this.notification.error('错误', `${res.code}: ${res.msg}`);
+      }
+    });
+    this.machineService.getMachines().subscribe(res => {
+      if (res.code === 1000) {
+        this.machineList = <Array<any>>res.data;
+      } else {
+        this.notification.error('错误', `${res.code}: ${res.msg}`);
       }
     });
   }

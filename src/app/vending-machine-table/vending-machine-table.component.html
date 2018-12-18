@@ -3,7 +3,7 @@
     新增售货机
   </button>
 </div>
-<nz-table [nzData]="machineList">
+<nz-table [nzData]="machineList" [nzBordered]="true">
   <thead>
     <tr>
       <th>序号</th>
@@ -37,9 +37,6 @@
       </td>
       <td>
         {{machine.master.name}}
-      </td>
-      <td>
-        <a></a>
       </td>
     </tr>
   </tbody>

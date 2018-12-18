@@ -8,12 +8,25 @@
   <h3>填写商品数量:</h3>
 </div>
 <form nz-form [formGroup]="validateForm">
+  <nz-form-item>
+    <nz-form-label  [nzSpan]="7" [nzRequired]="true">选择配送员</nz-form-label>
+    <nz-select [formControlName]="'deliverymanId'" style="width: 120px;" [nzPlaceHolder]="'请选择'">
+      <nz-option *ngFor="let o of userList" [nzValue]="o.id" [nzLabel]="o.name"></nz-option>
+    </nz-select>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label  [nzSpan]="7" [nzRequired]="true">选择机柜</nz-form-label>
+    <nz-select [formControlName]="'machineId'" style="width: 120px;" [nzPlaceHolder]="'请选择'">
+      <nz-option *ngFor="let o of machineList" [nzValue]="o.id" [nzLabel]="o.serial"></nz-option>
+    </nz-select>
+  </nz-form-item>
   <nz-form-item *ngFor="let o of checkedGoods">
     <nz-form-label [nzSpan]="7" [nzRequired]="true">{{o.label}}</nz-form-label>
     <nz-form-control [nzSpan]="12">
       <nz-input-number [formControlName]="o.value"></nz-input-number>
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item *ngIf="checkedGoods.length != 0">
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
       <button nz-button (click)="resetForm($event)">重置</button>

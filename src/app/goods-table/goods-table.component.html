@@ -21,9 +21,6 @@
     <button nz-button [nzType]="'default'" (click)="selectOfStatus(7000)">
       已回收
     </button>
-    <button nz-button [nzType]="'primary'" [disabled]="!deliverymanDisable" (click)="setDeliverymanModal()">
-      设置配送员
-    </button>
   </nz-button-group>
 </div>
 <nz-table [nzData]="goodsList" [(nzPageIndex)]="pageIndex" [nzFrontPagination]="false" [nzBordered]="true"
