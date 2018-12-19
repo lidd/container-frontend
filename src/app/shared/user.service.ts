@@ -46,7 +46,7 @@ export class UserService {
   }
 
   saveUser(user: User): Observable<BaseResponse> {
-    return this.http.post<BaseResponse>(Urls.user_update, {id: user.id, name: user.name, phone: user.phone});
+    return this.http.post<BaseResponse>(Urls.user_update, {id: user.id, name: user.name, phone: user.phone, merchant: user.merchant});
   }
 
   logout() {

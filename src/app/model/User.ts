@@ -1,4 +1,5 @@
 import {Role} from './Role';
+import {Merchant} from './Merchant';
 
 export class User {
   id?: number;
@@ -8,5 +9,7 @@ export class User {
   phone?: string;
 
   roles?: Array<Role>;
+
+  merchant?: Merchant;
 
 }

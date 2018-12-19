@@ -8,10 +8,11 @@ import {User} from '../model/User';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {GlobalMapService} from '../shared/global-map.service';
-import {Page} from '../model/Page';
 import {AddUserFormComponent} from '../add-user-form/add-user-form.component';
 import {RefreshEmitterService} from '../shared/refresh-emitter.service';
 import {Cmd} from '../model/Cmd';
+import {Merchant} from '../model/Merchant';
+import {MerchantService} from '../shared/merchant.service';
 
 @Component({
   selector: 'app-user-table',
@@ -22,12 +23,15 @@ export class UserTableComponent implements OnInit {
 
   constructor(private userService: UserService, private roleService: RoleService,
               private nzModalService: NzModalService, private nzNotificationService: NzNotificationService,
-              private globalMap: GlobalMapService, private refreshEmitter: RefreshEmitterService) {
+              private globalMap: GlobalMapService, private refreshEmitter: RefreshEmitterService,
+              private merchantService: MerchantService) {
   }
 
   userList = [];
 
   checkedRoles = [];
+
+  merchants: Array<Merchant>;
 
   authUserId: number = -1;
 
@@ -93,7 +97,9 @@ export class UserTableComponent implements OnInit {
   saveEdit(id: number): void {
     const index = this.userList.findIndex(item => item.id === id);
     Object.assign(this.userList[index], this.editCache[id].user);
-    this.userService.saveUser(this.userList[index]).subscribe(res => {
+    let param = this.userList[index];
+    param.merchant = {id: param.merchantId};
+    this.userService.saveUser(param).subscribe(res => {
       if (res.code == 1000) {
         this.nzNotificationService.success('成功', '修改成功');
         this.loadUserList();
@@ -116,6 +122,11 @@ export class UserTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUserList();
+    this.merchantService.getMerchantList().subscribe(res => {
+      if (res.code == 1000) {
+        this.merchants = <Array<Merchant>>res.data;
+      }
+    });
   }
 
   loadUserList(): void {

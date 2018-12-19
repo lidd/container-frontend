@@ -71,4 +71,15 @@ export class MerchantTableComponent implements OnInit {
       }
     });
   }
+
+  deleteMerchant(merchant:Merchant){
+    this.merchantService.deleteMerchant(merchant.id).subscribe(res =>{
+      if (res.code == 1000) {
+        this.refreshEmitter.emit(Cmd.refresh_merchant_table);
+        this.notification.success('成功','删除成功');
+      } else {
+        this.notification.error('错误',`${res.code}: ${res.msg}`);
+      }
+    });
+  }
 }

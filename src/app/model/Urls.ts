@@ -26,4 +26,5 @@ export class Urls {
   static upload_machine_status = '/machine/upload-status';
   static order_page = '/order/page';
   static set_deliveryman = '/goods/set-deliveryman';
+  static merchant_delete = '/merchant/delete';
 }

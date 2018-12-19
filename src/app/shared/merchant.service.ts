@@ -10,14 +10,20 @@ import {Urls} from '../model/Urls';
 })
 export class MerchantService {
 
-  constructor(private http:HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
   saveMerchant(value: Merchant): Observable<BaseResponse> {
     return this.http.post<BaseResponse>(Urls.merchant_save, value);
   }
 
-  getMerchantList():Observable<BaseResponse> {
+  getMerchantList(): Observable<BaseResponse> {
     return this.http.get<BaseResponse>(Urls.merchant_list);
+  }
+
+  deleteMerchant(id: number): Observable<BaseResponse> {
+    if (id) {
+      return this.http.delete<BaseResponse>(Urls.merchant_delete, {params: {id: id.toString()}});
+    }
   }
 }

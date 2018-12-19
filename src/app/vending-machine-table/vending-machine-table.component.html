@@ -9,7 +9,9 @@
       <th>序号</th>
       <th>地点</th>
       <th>温度</th>
+      <th>湿度</th>
       <th>状态</th>
+      <th>总仓位</th>
       <th>负责人</th>
     </tr>
   </thead>
@@ -24,6 +26,9 @@
       <td>
         {{machine.temperature * 0.1}}
       </td>
+      <td>
+        {{machine.humidity * 0.1}}
+      </td>
       <td [ngSwitch]="machine.status">
         <div *ngSwitchCase="1000">
           在线
@@ -32,8 +37,11 @@
           离线
         </div>
         <div *ngSwitchDefault>
-          未知
+          故障({{machine.status}})
         </div>
+      </td>
+      <td>
+        {{machine.capacity}}
       </td>
       <td>
         {{machine.master.name}}

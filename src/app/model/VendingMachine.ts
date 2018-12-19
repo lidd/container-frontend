@@ -16,6 +16,10 @@ export class VendingMachine {
 
   temperature?: number;
 
+  humidity?: number;
+
+  capacity?: number;
+
   goods?: Array<Goods>;
 
   master?: User;
