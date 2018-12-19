@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Merchant} from '../model/Merchant';
-import {ModalOptionsForService, NzModalService, NzNotificationService} from 'ng-zorro-antd';
+import {ModalOptionsForService, NzModalRef, NzModalService, NzNotificationService} from 'ng-zorro-antd';
 import {AddUserFormComponent} from '../add-user-form/add-user-form.component';
 import {Cmd} from '../model/Cmd';
 import {AddMerchantFormComponent} from '../add-merchant-form/add-merchant-form.component';
@@ -15,13 +15,23 @@ import {RefreshEmitterService} from '../shared/refresh-emitter.service';
 export class MerchantTableComponent implements OnInit {
 
   constructor(private modalService: NzModalService, private merchantService: MerchantService,
-              private refreshEmitter: RefreshEmitterService, private notification:NzNotificationService) {
+              private refreshEmitter: RefreshEmitterService, private notification: NzNotificationService) {
   }
 
   merchantList: Array<Merchant> = [];
 
+  modalRef: NzModalRef;
+
   ngOnInit() {
     this.loadMerchantList();
+    this.refreshEmitter.subscribe(e => {
+      if (e.name == Cmd.close_merchant_add_form) {
+        this.modalRef.destroy();
+      }
+      if (e.name == Cmd.refresh_merchant_table) {
+        this.loadMerchantList();
+      }
+    });
   }
 
 
@@ -33,25 +43,17 @@ export class MerchantTableComponent implements OnInit {
       nzComponentParams: {merchant: merchant},
       nzFooter: null
     };
-    let modalRef = this.modalService.create(option);
-    this.refreshEmitter.subscribe(e => {
-      if (e.name == Cmd.close_merchant_add_form) {
-        modalRef.destroy();
-      }
-      if (e.name == Cmd.refresh_merchant_table) {
-        this.loadMerchantList();
-      }
-    });
+    this.modalRef = this.modalService.create(option);
   }
 
   private loadMerchantList(): void {
-    this.merchantService.getMerchantList().subscribe(res =>{
+    this.merchantService.getMerchantList().subscribe(res => {
       if (res.code == 1000) {
         this.merchantList = <Array<Merchant>>res.data;
       } else {
-        this.notification.error('错误',`${res.code}: ${res.msg}`);
+        this.notification.error('错误', `${res.code}: ${res.msg}`);
       }
-    })
+    });
   }
 
   addMerchantModal() {
@@ -61,24 +63,17 @@ export class MerchantTableComponent implements OnInit {
       nzContent: AddMerchantFormComponent,
       nzFooter: null
     };
-    let modalRef = this.modalService.create(option);
-    this.refreshEmitter.subscribe(e => {
-      if (e.name == Cmd.close_merchant_add_form) {
-        modalRef.destroy();
-      }
-      if (e.name == Cmd.refresh_merchant_table) {
-        this.loadMerchantList();
-      }
-    });
+    this.modalRef = this.modalService.create(option);
+
   }
 
-  deleteMerchant(merchant:Merchant){
-    this.merchantService.deleteMerchant(merchant.id).subscribe(res =>{
+  deleteMerchant(merchant: Merchant) {
+    this.merchantService.deleteMerchant(merchant.id).subscribe(res => {
       if (res.code == 1000) {
-        this.refreshEmitter.emit(Cmd.refresh_merchant_table);
-        this.notification.success('成功','删除成功');
+        this.refreshEmitter.emit({name: Cmd.refresh_merchant_table});
+        this.notification.success('成功', '删除成功');
       } else {
-        this.notification.error('错误',`${res.code}: ${res.msg}`);
+        this.notification.error('错误', `${res.code}: ${res.msg}`);
       }
     });
   }
