@@ -8,6 +8,12 @@
         <!--</nz-select>-->
       <!--</td>-->
       <td>
+        <span>菜品: </span>
+        <nz-select [nzAllowClear]="true" style="width: 120px;" [(ngModel)]="selectedGoodsDesc" [nzPlaceHolder]="'请选择'">
+          <nz-option *ngFor="let o of goodsDescList" [nzValue]="o" [nzLabel]="o.description"></nz-option>
+        </nz-select>
+      </td>
+      <td>
         <span>选择机柜: </span>
         <nz-select [nzAllowClear]="true" style="width: 120px;" [(ngModel)]="selectedMachine" [nzPlaceHolder]="'请选择'">
           <nz-option *ngFor="let o of machineList" [nzValue]="o.serial" [nzLabel]="o.serial"></nz-option>

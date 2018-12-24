@@ -7,6 +7,7 @@ import {AddMachineFormComponent} from '../add-machine-form/add-machine-form.comp
 import {RefreshEmitterService} from '../shared/refresh-emitter.service';
 import {HttpClient} from '@angular/common/http';
 import {Urls} from '../model/Urls';
+import {UserService} from '../shared/user.service';
 
 @Component({
   selector: 'app-vending-machine',
@@ -19,18 +20,30 @@ export class VendingMachineTableComponent implements OnInit, OnDestroy {
               private nzModalService: NzModalService,
               private notification: NzNotificationService,
               private refreshEmitter: RefreshEmitterService,
-              private http: HttpClient) {
+              private http: HttpClient, private userService:UserService) {
   }
 
   machineList: Array<VendingMachine> = [];
 
+  detailVisible = false;
+
+  selectedMac:VendingMachine;
+
   timer;
+
+  isAdmin: boolean = false;
 
   ngOnInit() {
     this.initMachineList();
     this.timer = setInterval(() => {
       this.initMachineList();
     }, 5000);
+    this.userService.getCurrentUser().roles.forEach(r =>{
+      if (r.name == 'admin') {
+        this.isAdmin = true;
+        return;
+      }
+    })
   }
 
   private initMachineList(): void {
@@ -70,5 +83,18 @@ export class VendingMachineTableComponent implements OnInit, OnDestroy {
         this.initMachineList();
       }
     });
+  }
+
+  showDetail(machine: VendingMachine) {
+    this.selectedMac = machine;
+    this.detailVisible = !this.detailVisible;
+  }
+
+  editMachine(machine: VendingMachine) {
+    //todo
+  }
+
+  deleteMachine(machine: VendingMachine) {
+
   }
 }

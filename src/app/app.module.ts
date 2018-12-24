@@ -24,6 +24,7 @@ import { GoodsDescTableComponent } from './goods-desc-table/goods-desc-table.com
 import { AddGoodsDescFormComponent } from './add-goods-desc-form/add-goods-desc-form.component';
 import { GoodsOrderTableComponent } from './goods-order-table/goods-order-table.component';
 import { AddGoodsFormComponent } from './add-goods-form/add-goods-form.component';
+import {Base64} from './shared/base64.pipe';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { AddGoodsFormComponent } from './add-goods-form/add-goods-form.component
     AddGoodsDescFormComponent,
     GoodsOrderTableComponent,
     AddGoodsFormComponent,
+    Base64
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,7 @@ import { AddGoodsFormComponent } from './add-goods-form/add-goods-form.component
     ReactiveFormsModule,
     HttpClientModule,
     NgZorroAntdModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [{
     provide: LocationStrategy,

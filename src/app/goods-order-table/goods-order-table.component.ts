@@ -8,6 +8,7 @@ import zh from '@angular/common/locales/zh';
 import {registerLocaleData} from '@angular/common';
 import {VendingMachineService} from '../shared/vending-machine.service';
 import {MerchantService} from '../shared/merchant.service';
+import {GoodsDescription} from '../model/GoodsDescription';
 
 @Component({
   selector: 'app-goods-order-table',
@@ -21,8 +22,10 @@ export class GoodsOrderTableComponent implements OnInit {
   totalElements: number;
   merchantId: number;
   machineSerial: number;
+  selectedGoodsDesc:GoodsDescription;
   machineList = [];
   selectedMachine;
+  goodsDescList: Array<GoodsDescription>;
   merchantList = [];
   selectedMerchant;
   dateRange: Array<Date>;
@@ -39,6 +42,7 @@ export class GoodsOrderTableComponent implements OnInit {
     this.getOrderPage(params);
     this.initMachineList();
     this.initMerchantList();
+    this.initGoodsDescList();
   }
 
   private getOrderPage(params: object) {
@@ -76,6 +80,9 @@ export class GoodsOrderTableComponent implements OnInit {
     if (this.selectedMerchant) {
       params.merchantId = this.selectedMerchant.toString();
     }
+    if (this.selectedGoodsDesc) {
+      params.goodsDescId = this.selectedGoodsDesc.id;
+    }
     this.getOrderPage(params);
   }
 
@@ -97,5 +104,13 @@ export class GoodsOrderTableComponent implements OnInit {
         this.notification.error('错误', `${res.code}: ${res.msg}`);
       }
     });
+  }
+
+  private initGoodsDescList() {
+    this.goodsService.getGoodsDescList().subscribe(res => {
+      if (res.code == 1000) {
+        this.goodsDescList = <Array<GoodsDescription>>res.data;
+      }
+    })
   }
 }

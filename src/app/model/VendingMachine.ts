@@ -25,4 +25,6 @@ export class VendingMachine {
   master?: User;
 
   merchant?: Merchant;
+
+  exp?: number;
 }

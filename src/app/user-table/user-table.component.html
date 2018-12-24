@@ -7,6 +7,7 @@
   <thead>
   <tr>
     <th>姓名</th>
+    <th>用户二维码</th>
     <th>电话</th>
     <th>商户</th>
     <th>操作</th>
@@ -27,6 +28,9 @@
       </div>
     </td>
     <td>
+      {{user.name|Base64}}
+    </td>
+    <td>
       <ng-container *ngIf="!editCache[user.id].edit">
         {{user.phone}}
       </ng-container>
@@ -39,7 +43,8 @@
         <span *ngIf="user.merchant">{{user.merchant.name}}</span>
       </ng-container>
       <ng-container *ngIf="editCache[user.id].edit">
-        <nz-select style="width: 120px" [(ngModel)]="editCache[user.id].user.merchantId" [nzAllowClear]="true" [nzPlaceHolder]="'Choose'">
+        <nz-select style="width: 120px" [(ngModel)]="editCache[user.id].user.merchantId" [nzAllowClear]="true"
+                   [nzPlaceHolder]="'Choose'">
           <nz-option *ngFor="let o of merchants" [nzValue]="o.id" [nzLabel]="o.name"></nz-option>
         </nz-select>
       </ng-container>
