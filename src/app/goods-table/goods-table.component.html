@@ -3,37 +3,52 @@
     <button nz-button [nzType]="'primary'" (click)="addGoodsModal()">
       新增商品
     </button>
-    <button nz-button [nzType]="'default'" (click)="selectOfStatus(0)">
-      显示全部
-    </button>
-    <button nz-button [nzType]="'default'" (click)="selectOfStatus(3000)">
-      待配送
-    </button>
-    <button nz-button [nzType]="'default'" (click)="selectOfStatus(4000)">
-      配送中
-    </button>
-    <button nz-button [nzType]="'default'" (click)="selectOfStatus(5000)">
-      售卖中
-    </button>
-    <button nz-button [nzType]="'default'" (click)="selectOfStatus(6000)">
-      已售出
-    </button>
-    <button nz-button [nzType]="'default'" (click)="selectOfStatus(7000)">
-      已回收
+    <button nz-button [nzType]="'primary'" (click)="getGoodsPage()">
+      搜索
     </button>
   </nz-button-group>
+  <table>
+    <tr>
+      <td>
+        <label>商品类别：</label>
+        <nz-select style="width: 360px" [nzMode]="'multiple'" [nzPlaceHolder]="'Please select'" [(ngModel)]="queryDto.goodsDescriptionId">
+          <nz-option *ngFor="let option of goodsFilter" [nzLabel]="option.description" [nzValue]="option.id"></nz-option>
+        </nz-select>
+      </td>
+      <td>
+        <label>机柜名称：</label>
+        <nz-select style="width: 360px" [nzMode]="'multiple'" [nzPlaceHolder]="'Please select'" [(ngModel)]="queryDto.machineSerial">
+          <nz-option *ngFor="let option of machineFilters" [nzLabel]="option.location" [nzValue]="option.serial"></nz-option>
+        </nz-select>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>商品状态：</label>
+        <nz-select [nzMaxMultipleCount]="4" style="width: 360px" [nzMode]="'multiple'" [nzPlaceHolder]="'Please select'" [(ngModel)]="queryDto.goodsStatus">
+          <nz-option *ngFor="let option of goodsStatusFilter" [nzLabel]="option.text" [nzValue]="option.value"></nz-option>
+        </nz-select>
+      </td>
+      <td>
+        <label>创建时间：</label>
+        <nz-range-picker style="width: 360px" [(ngModel)]="queryDto.createTime" [nzShowTime]="true"></nz-range-picker>
+      </td>
+    </tr>
+  </table>
 </div>
-<nz-table [nzData]="goodsList" [(nzPageIndex)]="pageIndex" [nzFrontPagination]="false" [nzBordered]="true"
-          [nzPageSize]="pageSize"
+<nz-table [nzData]="goodsList" [(nzPageIndex)]="queryDto.page" [nzFrontPagination]="false" [nzBordered]="true"
+          [nzPageSize]="queryDto.size"
           [nzTotal]="totalElements" (nzPageIndexChange)="pageIndexChange()">
   <thead>
   <tr>
     <th [nzWidth]="'62px'" [nzShowCheckbox]="true" [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate"
         (nzCheckedChange)="checkAll($event)"></th>
     <th>商品名称</th>
+    <th>创建时间</th>
     <th>单价（元）</th>
     <th>批次</th>
     <th>状态</th>
+    <th>机柜名</th>
     <th>配送员</th>
   </tr>
   </thead>
@@ -43,6 +58,7 @@
     <td>
       {{goods.goodsDescription.description}}
     </td>
+    <td>{{goods.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
     <td>
       {{goods.goodsDescription.price * 0.01}}
     </td>
@@ -57,6 +73,7 @@
       <span *ngSwitchCase="7000">出库</span>
       <span *ngSwitchDefault>未知</span>
     </td>
+    <td>{{goods.vendingMachine.location}} {{goods.vendingMachine.serial}}</td>
     <td>
       <span *ngIf="goods.deliveryman">
               {{goods.deliveryman.name}}

@@ -33,10 +33,8 @@ export class AuthTreeComponent implements OnInit {
 
   checkedKeysChanged() {
     let nodes = this.authTree.getCheckedNodeList();
-    console.log(nodes);
     if (this.authTree.getHalfCheckedNodeList()) {
       this.authTree.getHalfCheckedNodeList().forEach(n => nodes.push(n));
-      console.log(nodes)
     }
     this.globalMap.put('checkedKeys', nodes);
   }

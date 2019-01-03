@@ -1,0 +1,54 @@
+<div style="margin-bottom: 16px;">
+  <nz-button-group>
+    <button nz-button [nzType]="'primary'" (click)="addGoodsModal()">
+      新增商品
+    </button>
+  </nz-button-group>
+</div>
+<nz-table [nzData]="sheetList" [(nzPageIndex)]="queryDto.page" [nzFrontPagination]="false" [nzBordered]="true"
+          [nzPageSize]="queryDto.size"
+          [nzTotal]="totalElements" (nzPageIndexChange)="pageIndexChange()" [nzScroll]="{ x:'1300px'}">
+  <thead>
+  <tr>
+    <th [nzWidth]="'100px'" [nzLeft]="'0px'">机柜号</th>
+    <th [nzWidth]="'100px'" [nzLeft]="'100px'">批次号</th>
+    <th *ngFor="let d of goodsDescList">
+      {{d.description}}
+    </th>
+    <th [nzWidth]="'100px'" [nzRight]="'300px'">合计</th>
+    <th [nzWidth]="'100px'" [nzRight]="'200px'">配货员</th>
+    <th [nzWidth]="'100px'" [nzRight]="'100px'">机柜量</th>
+    <th [nzWidth]="'100px'" [nzRight]="'0px'">操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let s of sheetList">
+    <td [nzLeft]="'0px'">
+      {{s.machineLocation}}
+    </td>
+    <td [nzLeft]="'100px'">
+      {{s.batchNo}}
+    </td>
+    <td *ngFor="let d of goodsDescList">
+      <div *ngFor="let g of s.descriptions;let i = index">
+        <span *ngIf="g.goodsDesc == d.description">
+          {{g.amount}}
+        </span>
+      </div>
+    </td>
+    <td [nzRight]="'300px'">
+      {{s.total}}
+    </td>
+    <td [nzRight]="'200px'">
+      {{s.deliveryman}}
+    </td>
+    <td [nzRight]="'100px'">
+      {{s.machineCapacity}}
+    </td>
+    <td [nzRight]="'0px'">
+      <a (click)="editSheet(s)">编辑</a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+

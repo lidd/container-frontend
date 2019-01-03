@@ -20,12 +20,30 @@ export class GoodsService {
     return this.http.post<BaseResponse>(Urls.goods_desc_add, goodsDesc);
   }
 
-  getGoodsPage(page: number, size: number, status: number = 0): Observable<BaseResponse> {
-    return this.http.get<BaseResponse>(Urls.goods_page, {params: {page: page.toString(), size: size.toString(), status: status.toString()}});
+  getGoodsPage(queryParams): Observable<BaseResponse> {
+    let queryDto: any = {};
+    Object.assign(queryDto, queryParams);
+    let createTime: Date[] = queryParams.createTime;
+    if (createTime)
+      queryDto.createTime = createTime[0].getTime() + ',' + createTime[1].getTime();
+    // goodsDescriptionId: '',
+    //   goodsStatus: '',
+    //   machineSerial: '',
+    //   createTime: ''
+    let goodsDescriptionId = queryParams.goodsDescriptionId;
+    if (goodsDescriptionId)
+      queryDto.goodsDescriptionId = goodsDescriptionId.toString();
+    let goodsStatus = queryParams.goodsStatus;
+    if (goodsStatus)
+      queryDto.goodsStatus = goodsStatus.toString();
+    let machineSerial = queryParams.machineSerial;
+    if (machineSerial)
+      queryDto.machineSerial = machineSerial.toString();
+    return this.http.get<BaseResponse>(Urls.goods_page, {params: queryDto});
   }
 
   addGoods(value: any): Observable<BaseResponse> {
-    return this.http.post<BaseResponse>(Urls.goods_add, value);
+    return this.http.post<BaseResponse>(Urls.delivery_sheet_add, value);
   }
 
   getOrderPage(params): Observable<BaseResponse> {
@@ -34,5 +52,9 @@ export class GoodsService {
 
   saveDeliveryman(selectedMan: any, selectedMachine: any, goods: Array<number>) {
     return this.http.post<BaseResponse>(Urls.set_deliveryman, {userId: selectedMan, serial: selectedMachine, goodsIds: goods});
+  }
+
+  getSheetPage(params) {
+    return this.http.get<BaseResponse>(Urls.get_sheet_page,{params: params});
   }
 }

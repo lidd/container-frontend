@@ -100,7 +100,7 @@ export class AddGoodsFormComponent implements OnInit {
     this.loading = true;
     this.goodsService.addGoods(value).subscribe(res => {
       if (res.code == 1000) {
-        this.notification.success('成功', '新增商品成功');
+        this.notification.success('成功', '新增配货单成功');
         this.refreshEmitter.emit({name: Cmd.refresh_goods_table});
         this.refreshEmitter.emit({name: Cmd.close_goods_add_form});
       } else {

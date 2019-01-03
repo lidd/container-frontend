@@ -10,6 +10,7 @@ import {MerchantTableComponent} from './merchant-table/merchant-table.component'
 import {GoodsDescTableComponent} from './goods-desc-table/goods-desc-table.component';
 import {GoodsTableComponent} from './goods-table/goods-table.component';
 import {GoodsOrderTableComponent} from './goods-order-table/goods-order-table.component';
+import {DeliverySheetTableComponent} from './delivery-sheet-table/delivery-sheet-table.component';
 
 
 const routes: Routes = [{
@@ -29,17 +30,20 @@ const routes: Routes = [{
     path: 'monitor',
     component: VendingMachineTableComponent
   }, {
-    path:'merchant',
+    path: 'merchant',
     component: MerchantTableComponent
-  },{
-    path:'goods-desc',
-    component:GoodsDescTableComponent
-  },{
-    path:'goods',
-    component:GoodsTableComponent
-  },{
-    path:'order',
-    component:GoodsOrderTableComponent
+  }, {
+    path: 'goods-desc',
+    component: GoodsDescTableComponent
+  }, {
+    path: 'goods',
+    component: GoodsTableComponent
+  }, {
+    path: 'order',
+    component: GoodsOrderTableComponent
+  }, {
+    path: 'delivery-sheet',
+    component: DeliverySheetTableComponent
   }],
   canActivate: [LoginGuard]
 }, {

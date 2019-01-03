@@ -22,9 +22,10 @@ export class Urls {
   static goods_desc_list = '/goods-description/list';
   static goods_desc_add = '/goods-description/add';
   static goods_page = '/goods/page';
-  static goods_add = '/goods/add';
+  static delivery_sheet_add = '/goods/add-delivery-sheet';
   static upload_machine_status = '/machine/upload-status';
   static order_page = '/order/page';
   static set_deliveryman = '/goods/set-deliveryman';
   static merchant_delete = '/merchant/delete';
+  static get_sheet_page = '/goods/get-delivery-sheet-page';
 }

@@ -93,7 +93,6 @@ export class RoleTableComponent implements OnInit {
       map(res => {
         if (res.code = 1000) {
           let resources: Array<Resource> = (<Role>res.data).resources;
-          console.log(resources);
           resources.forEach(res => {
             if (res.children) {
               res.children.forEach(c => {
@@ -112,7 +111,6 @@ export class RoleTableComponent implements OnInit {
     let checkedNodes: Array<NzTreeNode> = this.globalMap.get('checkedKeys');
     if (checkedNodes) {
       let nodes = [];
-      console.log(checkedNodes);
       checkedNodes.forEach(n => {
         if (n.isAllChecked) {
           n.children.forEach(c => nodes.push(parseInt(c.key)));

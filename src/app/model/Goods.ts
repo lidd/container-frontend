@@ -1,5 +1,6 @@
 import {GoodsDescription} from './GoodsDescription';
 import {User} from './User';
+import {VendingMachine} from './VendingMachine';
 
 export class Goods {
 
@@ -18,4 +19,6 @@ export class Goods {
   checked?: boolean;
 
   deliveryman?:User;
+
+  vendingMachine?:VendingMachine;
 }

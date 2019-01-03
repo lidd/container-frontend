@@ -23,7 +23,6 @@ export class LoginGuard implements CanActivate {
   checkSession(): Observable<boolean> {
     return this.userService.checkFromSession().pipe(
       map(res => {
-        console.log(res);
         if (res.code == 1000) {
           this.userService.setCurrentUser(<User>res.data);
           return true;

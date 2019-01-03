@@ -8,6 +8,10 @@ import {GoodsService} from '../shared/goods.service';
 import {Page} from '../model/Page';
 import {UserService} from '../shared/user.service';
 import {VendingMachineService} from '../shared/vending-machine.service';
+import {GoodsDescription} from '../model/GoodsDescription';
+import {VendingMachine} from '../model/VendingMachine';
+import zh from '@angular/common/locales/zh';
+import {registerLocaleData} from '@angular/common';
 
 @Component({
   selector: 'app-goods-table',
@@ -18,25 +22,62 @@ export class GoodsTableComponent implements OnInit {
 
   goodsList: Goods[] = [];
 
-  pageIndex: number = 1;
-  pageSize: number = 10;
   totalElements: number;
   isVisible = false;
   userList = [];
-  machineList=[];
+  machineList = [];
   selectedMan;
   deliverymanDisable = false;
   allChecked = false;
   indeterminate = false;
   selectedMachine;
+  goodsFilter: Array<GoodsDescription> = [];
+  goodsStatusFilter: Array<{text:string, value:number}> = [
+    {text: '待配送', value: 3000},
+    {text: '配送中', value: 4000},
+    {text: '售卖中', value: 5000},
+    {text: '已售出', value: 6000},
+    {text: '已回收', value: 7000}
+  ];
+  machineFilters: Array<VendingMachine> = [];
+
+  queryDto = {
+    page: '1',
+    size: '10',
+    goodsDescriptionId: '',
+    goodsStatus: '',
+    machineSerial: '',
+    createTime: ''
+  };
 
   constructor(private modalService: NzModalService, private refreshEmitter: RefreshEmitterService,
               private goodsService: GoodsService, private notification: NzNotificationService,
-              private userService: UserService, private machineService:VendingMachineService) {
+              private userService: UserService, private machineService: VendingMachineService) {
+
   }
 
   ngOnInit() {
-    this.getGoodsPage(this.pageIndex, this.pageSize);
+    registerLocaleData(zh);
+    this.initGoodsFilters();
+    this.initMachineFilters();
+    this.getGoodsPage();
+  }
+
+  initMachineFilters() {
+    this.machineService.getMachines().subscribe(res => {
+      if (res.code == 1000) {
+        this.machineFilters = <Array<VendingMachine>>res.data;
+      }
+    });
+  }
+
+  initGoodsFilters() {
+    this.goodsService.getGoodsDescList().subscribe(res => {
+      if (res.code == 1000) {
+        this.goodsFilter = <Array<GoodsDescription>>res.data;
+
+      }
+    });
   }
 
   addGoodsModal() {
@@ -52,18 +93,18 @@ export class GoodsTableComponent implements OnInit {
         modalRef.destroy();
       }
       if (e.name == Cmd.refresh_goods_table) {
-        this.getGoodsPage(this.pageIndex, this.pageSize);
+        this.getGoodsPage();
       }
     });
   }
 
-  getGoodsPage(pageIndex: number, pageSize: number, status: number = 0) {
-    this.goodsService.getGoodsPage(pageIndex, pageSize, status).subscribe(res => {
+  getGoodsPage() {
+    this.goodsService.getGoodsPage(this.queryDto).subscribe(res => {
       if (res.code == 1000) {
         let page: Page = <Page>res.data;
         this.goodsList = page.content;
-        this.pageIndex = page.number + 1;
-        this.pageSize = page.size;
+        this.queryDto.page = (page.number + 1).toString();
+        this.queryDto.size = page.size.toString();
         this.totalElements = page.totalElements;
       } else {
         this.notification.error('错误', `${res.code}: ${res.msg}`);
@@ -90,12 +131,12 @@ export class GoodsTableComponent implements OnInit {
   }
 
   pageIndexChange() {
-    this.getGoodsPage(this.pageIndex, this.pageSize);
+    this.getGoodsPage();
   };
 
   handleOk() {
     if (this.selectedMan) {
-      this.goodsService.saveDeliveryman(this.selectedMan, this.selectedMachine,this.goodsList.filter(e => e.checked === true).map(e => e.id))
+      this.goodsService.saveDeliveryman(this.selectedMan, this.selectedMachine, this.goodsList.filter(e => e.checked === true).map(e => e.id))
         .subscribe(res => {
           if (res.code === 1000) {
             this.notification.success('成功', '设置成功');
@@ -103,7 +144,7 @@ export class GoodsTableComponent implements OnInit {
             this.notification.error('错误', `${res.code}: ${res.msg}`);
           }
           this.isVisible = false;
-          this.getGoodsPage(this.pageIndex, this.pageSize);
+          this.getGoodsPage();
           this.refreshCheckStatus();
         });
     }
@@ -126,9 +167,5 @@ export class GoodsTableComponent implements OnInit {
       data.checked = value;
     });
     this.refreshCheckStatus();
-  }
-
-  selectOfStatus(status:number) {
-    this.getGoodsPage(this.pageIndex, this.pageSize, status);
   }
 }
