@@ -57,4 +57,8 @@ export class GoodsService {
   getSheetPage(params) {
     return this.http.get<BaseResponse>(Urls.get_sheet_page,{params: params});
   }
+
+  getGoodsCollectPage(queryDto: { page: string; size: string }) {
+    return this.http.get<BaseResponse>(Urls.goods_collect_page, {params:queryDto});
+  }
 }

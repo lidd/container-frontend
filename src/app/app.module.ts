@@ -26,6 +26,7 @@ import { GoodsOrderTableComponent } from './goods-order-table/goods-order-table.
 import { AddGoodsFormComponent } from './add-goods-form/add-goods-form.component';
 import {Base64} from './shared/base64.pipe';
 import { DeliverySheetTableComponent } from './delivery-sheet-table/delivery-sheet-table.component';
+import { GoodsCollectTableComponent } from './goods-collect-table/goods-collect-table.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { DeliverySheetTableComponent } from './delivery-sheet-table/delivery-she
     GoodsOrderTableComponent,
     AddGoodsFormComponent,
     Base64,
-    DeliverySheetTableComponent
+    DeliverySheetTableComponent,
+    GoodsCollectTableComponent
   ],
   imports: [
     BrowserModule,

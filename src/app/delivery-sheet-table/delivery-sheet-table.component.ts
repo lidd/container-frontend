@@ -74,6 +74,7 @@ export class DeliverySheetTableComponent implements OnInit {
   }
 
   pageIndexChange() {
+    this.initSheetPage();
   }
 
 

@@ -1,0 +1,63 @@
+<div style="margin-bottom: 16px">
+  <table>
+    <tr>
+      <td>批次号:</td>
+      <td>
+        <label>
+          <input nz-input [(ngModel)]="queryDto.deliverBatchNo">
+        </label>
+      </td>
+      <td>机柜号:</td>
+      <td>
+        <label>
+          <input nz-input [(ngModel)]="queryDto.machineSerial">
+        </label>
+      </td>
+      <td>菜品名:</td>
+      <td>
+        <label>
+          <input nz-input [(ngModel)]="queryDto.goodsDesc">
+        </label>
+      </td>
+      <td>时间:</td>
+      <td>
+        <nz-range-picker [nzAllowClear]="true" [(ngModel)]="dateRange" [nzShowTime]="true"></nz-range-picker>
+      </td>
+      <td>
+        <button nz-button [nzType]="'primary'" (click)="initPage()">搜索</button>
+      </td>
+    </tr>
+  </table>
+</div>
+<nz-table [nzData]="collectData" [(nzPageIndex)]="queryDto.page" [nzFrontPagination]="false" [nzBordered]="true"
+          [nzPageSize]="queryDto.size"
+          [nzTotal]="totalElements" (nzPageIndexChange)="pageIndexChange()">
+  <thead>
+  <tr>
+    <th>时间</th>
+    <th>配送批次</th>
+    <th>机柜号</th>
+    <th>菜名</th>
+    <th>预配送数量</th>
+    <th>实际配送数量</th>
+    <th>已售数量</th>
+    <th>单价</th>
+    <th>总额</th>
+    <th>应回收数量</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let c of collectData">
+    <td>{{c.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+    <td>{{c.deliverBatchNo}}</td>
+    <td>{{c.machineSerial}}</td>
+    <td>{{c.goodsDesc}}</td>
+    <td>{{c.prepareDeliverAmount}}</td>
+    <td>{{c.actualDeliverAmount}}</td>
+    <td>{{c.soldAmount}}</td>
+    <td>{{(c.price * 0.01)}}</td>
+    <td>{{c.singleTotalAmount * 0.01}}</td>
+    <td>{{c.shouldRecycleAmount}}</td>
+  </tr>
+  </tbody>
+</nz-table>

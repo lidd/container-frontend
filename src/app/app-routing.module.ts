@@ -11,6 +11,7 @@ import {GoodsDescTableComponent} from './goods-desc-table/goods-desc-table.compo
 import {GoodsTableComponent} from './goods-table/goods-table.component';
 import {GoodsOrderTableComponent} from './goods-order-table/goods-order-table.component';
 import {DeliverySheetTableComponent} from './delivery-sheet-table/delivery-sheet-table.component';
+import {GoodsCollectTableComponent} from './goods-collect-table/goods-collect-table.component';
 
 
 const routes: Routes = [{
@@ -44,6 +45,9 @@ const routes: Routes = [{
   }, {
     path: 'delivery-sheet',
     component: DeliverySheetTableComponent
+  },{
+    path:'goods-collect',
+    component:GoodsCollectTableComponent
   }],
   canActivate: [LoginGuard]
 }, {

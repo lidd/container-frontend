@@ -28,4 +28,5 @@ export class Urls {
   static set_deliveryman = '/goods/set-deliveryman';
   static merchant_delete = '/merchant/delete';
   static get_sheet_page = '/goods/get-delivery-sheet-page';
+  static goods_collect_page = '/goods/get-goods-collect-page';
 }
