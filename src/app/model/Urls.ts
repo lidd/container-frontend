@@ -29,4 +29,5 @@ export class Urls {
   static merchant_delete = '/merchant/delete';
   static get_sheet_page = '/goods/get-delivery-sheet-page';
   static goods_collect_page = '/goods/get-goods-collect-page';
+  static delivery_sheet_save: string = '/goods/save-deliver-sheet';
 }

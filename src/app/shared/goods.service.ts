@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {BaseResponse} from '../model/BaseResponse';
 import {Urls} from '../model/Urls';
+import {DeliverySheet} from '../model/DeliverySheet';
 
 @Injectable({
   providedIn: 'root'
@@ -60,5 +61,9 @@ export class GoodsService {
 
   getGoodsCollectPage(queryDto: { page: string; size: string }) {
     return this.http.get<BaseResponse>(Urls.goods_collect_page, {params:queryDto});
+  }
+
+  editDeliverSheet(s: DeliverySheet){
+    return this.http.post<BaseResponse>(Urls.delivery_sheet_save, s);
   }
 }

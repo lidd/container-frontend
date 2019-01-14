@@ -9,6 +9,8 @@ import {VendingMachineService} from '../shared/vending-machine.service';
 import {DeliverySheet} from '../model/DeliverySheet';
 import {GoodsDescription} from '../model/GoodsDescription';
 import {Page} from '../model/Page';
+import {User} from '../model/User';
+import {VendingMachine} from '../model/VendingMachine';
 
 @Component({
   selector: 'app-delivery-sheet-table',
@@ -25,9 +27,19 @@ export class DeliverySheetTableComponent implements OnInit {
   ngOnInit() {
     this.initGoodsDescList();
     this.initSheetPage();
+    this.initDeliverymanAndMachine();
+
   }
 
   sheetList: Array<DeliverySheet> = [];
+
+  isVisible: boolean = false;
+
+  sheetToEdit: DeliverySheet = {};
+
+  userList: Array<User> = [];
+
+  machineList: Array<VendingMachine> = [];
 
   goodsDescList: Array<GoodsDescription>;
 
@@ -79,6 +91,39 @@ export class DeliverySheetTableComponent implements OnInit {
 
 
   editSheet(s: DeliverySheet) {
+    this.sheetToEdit = s;
+    this.isVisible = true;
+  }
 
+  handleOk() {
+    this.goodsService.editDeliverSheet(this.sheetToEdit).subscribe(res => {
+      if (res.code == 1000) {
+        this.notification.success('通知', '保存成功');
+      } else {
+        this.notification.error('错误', `${res.code}: ${res.msg}`);
+      }
+      this.isVisible = false;
+    });
+  }
+
+  initDeliverymanAndMachine() {
+    this.userService.getUserList().subscribe(res => {
+      if (res.code === 1000) {
+        this.userList = <Array<any>>res.data;
+      } else {
+        this.notification.error('错误', `${res.code}: ${res.msg}`);
+      }
+    });
+    this.machineService.getMachines().subscribe(res => {
+      if (res.code === 1000) {
+        this.machineList = <Array<any>>res.data;
+      } else {
+        this.notification.error('错误', `${res.code}: ${res.msg}`);
+      }
+    });
+  }
+
+  handleCancel() {
+    this.isVisible = false;
   }
 }

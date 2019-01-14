@@ -51,4 +51,21 @@
   </tr>
   </tbody>
 </nz-table>
-
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="'编辑'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <table>
+    <tr>
+      <td>配货员：</td>
+      <td>
+        <nz-select style="width: 120px" [(ngModel)]="sheetToEdit.deliveryman">
+          <nz-option *ngFor="let o of userList" [nzValue]="o.name" [nzLabel]="o.name"></nz-option>
+        </nz-select>
+      </td>
+      <td>机柜：</td>
+      <td>
+        <nz-select style="width: 120px" [(ngModel)]="sheetToEdit.machineLocation">
+          <nz-option *ngFor="let o of machineList" [nzValue]="o.location" [nzLabel]="o.location"></nz-option>
+        </nz-select>
+      </td>
+    </tr>
+  </table>
+</nz-modal>

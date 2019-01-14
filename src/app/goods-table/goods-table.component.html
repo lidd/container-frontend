@@ -1,22 +1,20 @@
 <div style="margin-bottom: 16px;">
   <nz-button-group>
-    <button nz-button [nzType]="'primary'" (click)="addGoodsModal()">
-      新增商品
-    </button>
-    <button nz-button [nzType]="'primary'" (click)="getGoodsPage()">
-      搜索
-    </button>
   </nz-button-group>
   <table>
     <tr>
       <td>
         <label>商品类别：</label>
+      </td>
+      <td>
         <nz-select style="width: 360px" [nzMode]="'multiple'" [nzPlaceHolder]="'Please select'" [(ngModel)]="queryDto.goodsDescriptionId">
           <nz-option *ngFor="let option of goodsFilter" [nzLabel]="option.description" [nzValue]="option.id"></nz-option>
         </nz-select>
       </td>
       <td>
         <label>机柜名称：</label>
+      </td>
+      <td>
         <nz-select style="width: 360px" [nzMode]="'multiple'" [nzPlaceHolder]="'Please select'" [(ngModel)]="queryDto.machineSerial">
           <nz-option *ngFor="let option of machineFilters" [nzLabel]="option.location" [nzValue]="option.serial"></nz-option>
         </nz-select>
@@ -25,14 +23,26 @@
     <tr>
       <td>
         <label>商品状态：</label>
+      </td>
+      <td>
         <nz-select [nzMaxMultipleCount]="4" style="width: 360px" [nzMode]="'multiple'" [nzPlaceHolder]="'Please select'" [(ngModel)]="queryDto.goodsStatus">
           <nz-option *ngFor="let option of goodsStatusFilter" [nzLabel]="option.text" [nzValue]="option.value"></nz-option>
         </nz-select>
       </td>
       <td>
         <label>创建时间：</label>
+      </td>
+      <td>
         <nz-range-picker style="width: 360px" [(ngModel)]="queryDto.createTime" [nzShowTime]="true"></nz-range-picker>
       </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><button nz-button [nzType]="'primary'" (click)="getGoodsPage()">
+        搜索
+      </button></td>
     </tr>
   </table>
 </div>
