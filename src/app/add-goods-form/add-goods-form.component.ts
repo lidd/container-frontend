@@ -7,7 +7,6 @@ import {GoodsDescription} from '../model/GoodsDescription';
 import {Cmd} from '../model/Cmd';
 import {UserService} from '../shared/user.service';
 import {VendingMachineService} from '../shared/vending-machine.service';
-import {User} from '../model/User';
 import {VendingMachine} from '../model/VendingMachine';
 
 @Component({
@@ -23,13 +22,17 @@ export class AddGoodsFormComponent implements OnInit {
 
   userList = [];
 
-  machineList = [];
+  machineList: Array<VendingMachine> = [];
 
   loading = false;
 
-  controlsConfig:any = {};
+  controlsConfig: any = {};
 
   checkedGoods = [];
+
+  checkedMachine: VendingMachine = {capacity: 0};
+
+  totalAmount: number = 0;
 
   constructor(private fb: FormBuilder, private goodsService: GoodsService,
               private notification: NzNotificationService, private refreshEmitter: RefreshEmitterService,
@@ -68,7 +71,7 @@ export class AddGoodsFormComponent implements OnInit {
     });
   }
 
-  updateCheckGoods() {
+  updateCheckGoods(value) {
     this.checkedGoods = [];
     this.goodsDescList.forEach(value => {
       if (value.checked) {
@@ -76,6 +79,13 @@ export class AddGoodsFormComponent implements OnInit {
         this.checkedGoods.push(value);
       }
     });
+    this.totalAmount = 0;
+    for (let name in value) {
+      if (!value.hasOwnProperty(name) || name == 'deliverymanId' || name == 'machineId') {
+        continue;
+      }
+      this.totalAmount += value[name];
+    }
     this.validateForm = this.fb.group(this.controlsConfig);
   }
 
@@ -122,6 +132,25 @@ export class AddGoodsFormComponent implements OnInit {
         this.machineList = <Array<any>>res.data;
       } else {
         this.notification.error('错误', `${res.code}: ${res.msg}`);
+      }
+    });
+  }
+
+  updateTotalAmount(value) {
+    this.totalAmount = 0;
+    for (let name in value) {
+      if (!value.hasOwnProperty(name) || name == 'deliverymanId' || name == 'machineId') {
+        continue;
+      }
+      this.totalAmount += value[name];
+    }
+  }
+
+  updateCheckMachine(value) {
+    this.machineList.filter(e => {
+      if (e.id == value['machineId']) {
+        this.checkedMachine = e;
+        return;
       }
     });
   }

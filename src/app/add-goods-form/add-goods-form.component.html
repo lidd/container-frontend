@@ -2,7 +2,7 @@
   <h3>请选择需要添加的产品:
   </h3>
   <div style="padding-top: 20px">
-    <nz-checkbox-group [(ngModel)]="goodsDescList" (ngModelChange)="updateCheckGoods()"></nz-checkbox-group>
+    <nz-checkbox-group [(ngModel)]="goodsDescList" (ngModelChange)="updateCheckGoods(validateForm.value)"></nz-checkbox-group>
   </div>
 </div>
 <div style="padding-top: 20px">
@@ -17,14 +17,14 @@
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSpan]="7" [nzRequired]="true">选择机柜</nz-form-label>
-    <nz-select [formControlName]="'machineId'" style="width: 120px;" [nzPlaceHolder]="'请选择'">
+    <nz-select (ngModelChange)="updateCheckMachine(validateForm.value)" [formControlName]="'machineId'" style="width: 120px;" [nzPlaceHolder]="'请选择'">
       <nz-option *ngFor="let o of machineList" [nzValue]="o.id" [nzLabel]="o.serial"></nz-option>
     </nz-select>
   </nz-form-item>
   <nz-form-item *ngFor="let o of checkedGoods">
     <nz-form-label [nzSpan]="7" [nzRequired]="true">{{o.label}}</nz-form-label>
     <nz-form-control [nzSpan]="12">
-      <nz-input-number [formControlName]="o.value"></nz-input-number>
+      <nz-input-number [formControlName]="o.value" (ngModelChange)="updateTotalAmount(validateForm.value)"></nz-input-number>
       <nz-tag [nzColor]="'#f50'">数量保存后无法修改</nz-tag>
     </nz-form-control>
   </nz-form-item>
@@ -39,3 +39,7 @@
     </nz-form-control>
   </nz-form-item>
 </form>
+<div>
+  <label>合计数量：</label> <nz-tag [nzColor]="'red'">{{totalAmount}}</nz-tag>
+  <label>机柜容量：</label> <nz-tag [nzColor]="'red'">{{checkedMachine.capacity}}</nz-tag>
+</div>
