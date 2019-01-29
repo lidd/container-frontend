@@ -25,6 +25,8 @@ export class AddGoodsDescFormComponent implements OnInit {
   loading = false;
   fileList: UploadFile[] = [];
 
+  elementToEdit = null;
+
 
   beforeUpload = (file: UploadFile): boolean => {
     if (this.fileList.length == 1) {
@@ -37,9 +39,30 @@ export class AddGoodsDescFormComponent implements OnInit {
 
 
   ngOnInit() {
+    if (this.elementToEdit) {
+      this.validateForm.controls['description'].setValue(this.elementToEdit.description);
+      this.validateForm.controls['price'].setValue(this.elementToEdit.price * 0.01);
+    }
   }
 
   submit($event, value) {
+    if (this.elementToEdit) {
+      this.updateGoodsDesc($event, value);
+    } else {
+      this.addGoodsDesc($event, value);
+    }
+  }
+
+  resetForm(e: MouseEvent): void {
+    e.preventDefault();
+    this.validateForm.reset();
+    for (const key in this.validateForm.controls) {
+      this.validateForm.controls[key].markAsPristine();
+      this.validateForm.controls[key].updateValueAndValidity();
+    }
+  }
+
+  addGoodsDesc($event, value) {
     $event.preventDefault();
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
@@ -61,12 +84,30 @@ export class AddGoodsDescFormComponent implements OnInit {
     });
   }
 
-  resetForm(e: MouseEvent): void {
-    e.preventDefault();
-    this.validateForm.reset();
+  updateGoodsDesc($event, value) {
+    $event.preventDefault();
     for (const key in this.validateForm.controls) {
-      this.validateForm.controls[key].markAsPristine();
+      if (key == 'file')
+        continue;
+      this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     }
+    this.loading = true;
+    const formData = new FormData();
+    if (this.fileList[0]) {
+      formData.append('file', <any>this.fileList[0]);
+    }
+    formData.append('description', value.description);
+    formData.append('price', (value.price * 100).toString());
+    formData.append('id', this.elementToEdit.id);
+    this.goodsService.saveGoodsDesc(formData).subscribe(res => {
+      if (res.code == 1000) {
+        this.notification.success('成功', '更新成功');
+        this.refreshEmitter.emit({name: Cmd.refresh_goods_desc_table});
+        this.refreshEmitter.emit({name: Cmd.close_goods_desc_add_form});
+      } else {
+        this.notification.error('失败', `${res.code}: ${res.msg}`);
+      }
+    });
   }
 }

@@ -66,4 +66,12 @@ export class GoodsService {
   editDeliverSheet(s: DeliverySheet){
     return this.http.post<BaseResponse>(Urls.delivery_sheet_save, s);
   }
+
+  deleteGoodsDescById(id: number):Observable<BaseResponse> {
+    return this.http.get<BaseResponse>(Urls.delete_goods_desc, {params:{id:id.toString()}})
+  }
+
+  deleteSheet(s: DeliverySheet) {
+    return this.http.post<BaseResponse>(Urls.delete_sheet, {id:s.id});
+  }
 }

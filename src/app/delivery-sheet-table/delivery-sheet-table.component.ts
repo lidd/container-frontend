@@ -126,4 +126,14 @@ export class DeliverySheetTableComponent implements OnInit {
   handleCancel() {
     this.isVisible = false;
   }
+
+  deleteSheet(s: DeliverySheet) {
+    this.goodsService.deleteSheet(s).subscribe(res => {
+      if (res.code == 1000) {
+        this.notification.success('成功', '操作成功！');
+      } else {
+        this.notification.error('错误', `${res.code}: ${res.msg}`);
+      }
+    });
+  }
 }

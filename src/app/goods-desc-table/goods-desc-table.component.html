@@ -1,14 +1,17 @@
 <div style="margin-bottom: 16px;">
   <button nz-button [nzType]="'primary'" (click)="addGoodsDescModal()">
-    新增商品类型
+    添加
   </button>
 </div>
 <nz-table [nzData]="goodsDescList" [nzBordered]="true">
   <thead>
   <tr>
-    <th>商品描述</th>
+    <th>商品</th>
+    <th>商户</th>
     <th>价格（元）</th>
     <th>图片</th>
+    <th>条码</th>
+    <th>操作</th>
   </tr>
   </thead>
   <tbody>
@@ -16,9 +19,18 @@
     <td>
       {{goodsDesc.description}}
     </td>
-    <td>{{goodsDesc.price * 0.01}}</td>
+    <td>{{goodsDesc.merchant.name}}</td>
+    <td>{{goodsDesc.price * 0.01|number:'1.1-1'}}</td>
     <td>
       <a (click)="showFullImg(goodsDesc)">查看图片</a>
+    </td>
+    <td>
+      {{goodsDesc.barcode}}
+    </td>
+    <td>
+      <a (click)="editGoodsDesc(goodsDesc)">编辑</a>
+      <nz-divider [nzType]="'vertical'"></nz-divider>
+      <a (click)="deleteGoodsDesc(goodsDesc.id)">删除</a>
     </td>
   </tr>
   </tbody>

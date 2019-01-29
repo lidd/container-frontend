@@ -30,4 +30,7 @@ export class Urls {
   static get_sheet_page = '/goods/get-delivery-sheet-page';
   static goods_collect_page = '/goods/get-goods-collect-page';
   static delivery_sheet_save: string = '/goods/save-deliver-sheet';
+  static delete_machine: string = '/machine/delete';
+  static delete_goods_desc: string = '/goods-description/delete';
+  static delete_sheet: string = '/goods/delete-deliver-sheet';
 }

@@ -26,5 +26,7 @@ export class VendingMachine {
 
   merchant?: Merchant;
 
+  errorCode?: number;
+
   exp?: number;
 }

@@ -15,7 +15,7 @@ export class GoodsDescTableComponent implements OnInit {
 
   goodsDescList: Array<GoodsDescription> = [];
 
-  pageSize = 4;
+  isVisible: false;
 
   constructor(private goodsService: GoodsService, private notification: NzNotificationService,
               private modalService: NzModalService, private refreshEmitter: RefreshEmitterService) {
@@ -63,5 +63,34 @@ export class GoodsDescTableComponent implements OnInit {
         this.initGoodsDescList();
       }
     });
+  }
+
+  editGoodsDesc(goodsDesc: GoodsDescription) {
+    let option: ModalOptionsForService = {
+      nzVisible: true,
+      nzTitle: '编辑商品类型',
+      nzContent: AddGoodsDescFormComponent,
+      nzFooter: null,
+      nzComponentParams: {elementToEdit:goodsDesc}
+    };
+    let modalRef = this.modalService.create(option);
+    this.refreshEmitter.subscribe(e => {
+      if (e.name == Cmd.close_goods_desc_add_form) {
+        modalRef.destroy();
+      }
+      if (e.name == Cmd.refresh_goods_desc_table) {
+        this.initGoodsDescList();
+      }
+    });
+  }
+
+  deleteGoodsDesc(id: number) {
+    this.goodsService.deleteGoodsDescById(id).subscribe(res =>{
+      if(res.code == 1000){
+        this.notification.success('成功','操作成功！');
+      } else {
+        this.notification.error('错误',`${res.code}: ${res.msg}`);
+      }
+    })
   }
 }

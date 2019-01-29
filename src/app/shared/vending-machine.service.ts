@@ -22,8 +22,19 @@ export class VendingMachineService {
       serial: value.serial,
       location: value.location,
       master: {id: value.master},
-      merchant: {id: value.merchant}
+      merchant: {id: value.merchant},
+      exp:value.exp
     };
+    if(value.id){
+      machine.id = value.id;
+    }
+    if (value.capacity) {
+      machine.capacity = value.capacity;
+    }
     return this.http.post<BaseResponse>(Urls.machine_save, machine);
+  }
+
+  deleteById(id: number): Observable<BaseResponse> {
+    return this.http.get<BaseResponse>(Urls.delete_machine, {params: {id: id.toString()}});
   }
 }

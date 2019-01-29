@@ -8,6 +8,8 @@ import {RefreshEmitterService} from '../shared/refresh-emitter.service';
 import {HttpClient} from '@angular/common/http';
 import {Urls} from '../model/Urls';
 import {UserService} from '../shared/user.service';
+import {Merchant} from '../model/Merchant';
+import {MerchantService} from '../shared/merchant.service';
 
 @Component({
   selector: 'app-vending-machine',
@@ -20,30 +22,45 @@ export class VendingMachineTableComponent implements OnInit, OnDestroy {
               private nzModalService: NzModalService,
               private notification: NzNotificationService,
               private refreshEmitter: RefreshEmitterService,
-              private http: HttpClient, private userService:UserService) {
+              private merchantService: MerchantService,
+              private http: HttpClient, private userService: UserService) {
   }
 
   machineList: Array<VendingMachine> = [];
 
-  detailVisible = false;
-
-  selectedMac:VendingMachine;
+  selectedMac: VendingMachine = {};
 
   timer;
 
   isAdmin: boolean = false;
 
+  isVisible: boolean = false;
+
+  merchantList: Array<Merchant> = [];
+
+
   ngOnInit() {
     this.initMachineList();
+    this.initMerchantList();
     this.timer = setInterval(() => {
       this.initMachineList();
     }, 5000);
-    this.userService.getCurrentUser().roles.forEach(r =>{
+    this.userService.getCurrentUser().roles.forEach(r => {
       if (r.name == 'admin') {
         this.isAdmin = true;
         return;
       }
-    })
+    });
+  }
+
+  private initMerchantList(): void {
+    this.merchantService.getMerchantList().subscribe(res => {
+      if (res.code == 1000) {
+        this.merchantList = <Array<Merchant>>res.data;
+      } else {
+        this.notification.error('错误', `${res.code}: ${res.msg}`);
+      }
+    });
   }
 
   private initMachineList(): void {
@@ -85,16 +102,41 @@ export class VendingMachineTableComponent implements OnInit, OnDestroy {
     });
   }
 
-  showDetail(machine: VendingMachine) {
-    this.selectedMac = machine;
-    this.detailVisible = !this.detailVisible;
-  }
-
   editMachine(machine: VendingMachine) {
-    //todo
+    this.isVisible = true;
+    this.selectedMac = machine;
   }
 
   deleteMachine(machine: VendingMachine) {
+    this.vendingMachineService.deleteById(machine.id).subscribe(res => {
+      if (res.code == 1000) {
+        this.notification.success('成功', '操作成功！');
+      } else {
+        this.notification.error('错误', `${res.code}: ${res.msg}`);
+      }
+    });
+  }
 
+  handleCancel() {
+    this.isVisible = false;
+  }
+
+  handleOk() {
+    let p:any = {};
+    p.location = this.selectedMac.location;
+    p.serial = this.selectedMac.serial;
+    p.merchant = this.selectedMac.merchant.id;
+    p.master = this.selectedMac.master.id;
+    p.exp = this.selectedMac.exp;
+    p.id = this.selectedMac.id;
+    p.capacity = this.selectedMac.capacity;
+    this.vendingMachineService.saveMachine(p).subscribe(res => {
+      if (res.code == 1000) {
+        this.notification.success('成功', '操作成功！');
+      } else {
+        this.notification.error('错误', `${res.code}: ${res.msg}`);
+      }
+      this.isVisible = false;
+    });
   }
 }

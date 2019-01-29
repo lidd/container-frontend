@@ -1,6 +1,6 @@
-<div style="margin-bottom: 16px;">
+<div style="margin-bottom: 16px;" *ngIf="isAdmin">
   <button nz-button [nzType]="'primary'" (click)="addMachineModal()">
-    新增售货机
+    新增
   </button>
 </div>
 <nz-table [nzData]="machineList" [nzBordered]="true">
@@ -12,7 +12,8 @@
     <th>湿度</th>
     <th>状态</th>
     <th>总仓位</th>
-    <th>操作</th>
+    <th>保质期</th>
+    <th *ngIf="isAdmin">操作</th>
   </tr>
   </thead>
   <tbody>
@@ -37,19 +38,57 @@
         离线
       </div>
       <div *ngSwitchDefault>
-        故障({{machine.status}})
+        故障({{machine.errorCode}})
       </div>
     </td>
     <td>
       {{machine.capacity}}
     </td>
     <td>
+      {{machine.exp}}
+    </td>
+    <td *ngIf="isAdmin">
       <a (click)="editMachine(machine)">编辑</a>
-      <span *ngIf="isAdmin">
-          <nz-divider [nzType]="'vertical'"></nz-divider>
-          <a (click)="deleteMachine(machine)">删除</a>
-        </span>
+      <nz-divider [nzType]="'vertical'"></nz-divider>
+      <a (click)="deleteMachine(machine)">删除</a>
     </td>
   </tr>
   </tbody>
 </nz-table>
+<!--机柜编辑和添加时候的属性（“机器号”，“机器名”，“商户”，“地址”，“总仓位”，“保质期”）-->
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="'编辑'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <table class="tdContent">
+    <tr>
+      <td>机器号：</td>
+      <td>
+        <input nz-input [(ngModel)]="selectedMac.serial">
+      </td>
+    </tr>
+    <tr>
+      <td>商户：</td>
+      <td>
+        <nz-select style="width: 120px;" [(ngModel)]="selectedMac.merchant">
+          <nz-option *ngFor="let m of merchantList" [nzValue]="m" [nzLabel]="m.name"></nz-option>
+        </nz-select>
+      </td>
+    </tr>
+    <tr>
+      <td>地址(机器名)：</td>
+      <td>
+        <input nz-input [(ngModel)]="selectedMac.location">
+      </td>
+    </tr>
+    <tr>
+      <td>总仓位：</td>
+      <td>
+        <input nz-input [(ngModel)]="selectedMac.capacity">
+      </td>
+    </tr>
+    <tr>
+      <td>保质期：</td>
+      <td>
+        <input nz-input [(ngModel)]="selectedMac.exp">
+      </td>
+    </tr>
+  </table>
+</nz-modal>
