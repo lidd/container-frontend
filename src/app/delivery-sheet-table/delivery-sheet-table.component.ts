@@ -131,6 +131,7 @@ export class DeliverySheetTableComponent implements OnInit {
     this.goodsService.deleteSheet(s).subscribe(res => {
       if (res.code == 1000) {
         this.notification.success('成功', '操作成功！');
+        this.initSheetPage();
       } else {
         this.notification.error('错误', `${res.code}: ${res.msg}`);
       }

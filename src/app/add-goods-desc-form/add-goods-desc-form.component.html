@@ -24,6 +24,12 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
+    <nz-form-label [nzSpan]="7" [nzRequired]="true">商品条码</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzHasFeedback]="true">
+      <input nz-input [formControlName]="'barcode'" placeholder="'请输入商品条码'"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
     <nz-form-label [nzSpan]="7" [nzRequired]="true">图片</nz-form-label>
     <nz-form-control [nzSpan]="12">
       <nz-upload

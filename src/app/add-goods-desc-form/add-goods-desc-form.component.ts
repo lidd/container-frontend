@@ -18,6 +18,7 @@ export class AddGoodsDescFormComponent implements OnInit {
     this.validateForm = this.fb.group({
       description: ['', [Validators.required]],
       price: ['', [Validators.required]],
+      barcode:['', [Validators.required]],
     });
   }
 
@@ -42,6 +43,7 @@ export class AddGoodsDescFormComponent implements OnInit {
     if (this.elementToEdit) {
       this.validateForm.controls['description'].setValue(this.elementToEdit.description);
       this.validateForm.controls['price'].setValue(this.elementToEdit.price * 0.01);
+      this.validateForm.controls['barcode'].setValue(this.elementToEdit.barcode);
     }
   }
 
@@ -73,6 +75,7 @@ export class AddGoodsDescFormComponent implements OnInit {
     formData.append('file', <any>this.fileList[0]);
     formData.append('description', value.description);
     formData.append('price', (value.price * 100).toString());
+    formData.append('barcode',value.barcode);
     this.goodsService.saveGoodsDesc(formData).subscribe(res => {
       if (res.code == 1000) {
         this.notification.success('成功', '新增商品成功');
