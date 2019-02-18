@@ -127,7 +127,7 @@ export class VendingMachineTableComponent implements OnInit, OnDestroy {
     p.serial = this.selectedMac.serial;
     p.merchant = this.selectedMac.merchant.id;
     p.master = this.selectedMac.master.id;
-    p.exp = this.selectedMac.exp;
+    p.exp = 0;
     p.id = this.selectedMac.id;
     p.capacity = this.selectedMac.capacity;
     this.vendingMachineService.saveMachine(p).subscribe(res => {

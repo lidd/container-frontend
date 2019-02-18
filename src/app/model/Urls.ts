@@ -33,4 +33,5 @@ export class Urls {
   static delete_machine: string = '/machine/delete';
   static delete_goods_desc: string = '/goods-description/delete';
   static delete_sheet: string = '/goods/delete-deliver-sheet';
+  static user_delete: string = '/user/delete';
 }

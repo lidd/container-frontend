@@ -22,7 +22,7 @@ export class GoodsOrderTableComponent implements OnInit {
   totalElements: number;
   merchantId: number;
   machineSerial: number;
-  selectedGoodsDesc:GoodsDescription;
+  selectedGoodsDesc: GoodsDescription;
   machineList = [];
   selectedMachine;
   goodsDescList: Array<GoodsDescription>;
@@ -30,6 +30,7 @@ export class GoodsOrderTableComponent implements OnInit {
   selectedMerchant;
   dateRange: Array<Date>;
   totalProfit: any;
+  params: any = {page: 1, size: 10};
 
   constructor(private modalService: NzModalService, private refreshEmitter: RefreshEmitterService,
               private goodsService: GoodsService, private notification: NzNotificationService,
@@ -38,21 +39,20 @@ export class GoodsOrderTableComponent implements OnInit {
 
   ngOnInit() {
     registerLocaleData(zh);
-    let params = {page: this.pageIndex.toString(), size: this.pageSize.toString()};
-    this.getOrderPage(params);
+    this.getOrderPage();
     this.initMachineList();
     this.initMerchantList();
     this.initGoodsDescList();
   }
 
-  private getOrderPage(params: object) {
-    this.goodsService.getOrderPage(params).subscribe(res => {
+  private getOrderPage() {
+    this.goodsService.getOrderPage(this.params).subscribe(res => {
       if (res.code == 1000) {
         this.totalProfit = parseInt(res.msg) * 0.01;
         let page: Page = <Page>res.data;
         this.goodsOrderList = page.content;
-        this.pageIndex = page.number + 1;
-        this.pageSize = page.size;
+        this.params.page = page.number + 1;
+        this.params.size = page.size;
         this.totalElements = page.totalElements;
       } else {
         this.notification.error('错误', `${res.code}: ${res.msg}`);
@@ -61,29 +61,26 @@ export class GoodsOrderTableComponent implements OnInit {
   }
 
   pageIndexChange() {
-    let params = {page: this.pageIndex.toString(), size: this.pageSize.toString()};
-    this.getOrderPage(params);
+    this.getOrderPage();
   };
 
 
   search() {
-    let params: any = {};
-    params.page = this.pageIndex.toString();
-    params.size = this.pageSize.toString();
     if (this.dateRange) {
-      params.from = this.dateRange[0].getTime().toString();
-      params.to = this.dateRange[1].getTime().toString();
+      this.params.from = this.dateRange[0].getTime().toString();
+      this.params.to = this.dateRange[1].getTime().toString();
     }
     if (this.selectedMachine) {
-      params.machineSerial = this.selectedMachine.toString();
+      this.params.machineSerial = this.selectedMachine.toString();
     }
     if (this.selectedMerchant) {
-      params.merchantId = this.selectedMerchant.toString();
+      this.params.merchantId = this.selectedMerchant.toString();
     }
     if (this.selectedGoodsDesc) {
-      params.goodsDescId = this.selectedGoodsDesc.id;
+      this.params.goodsDescId = this.selectedGoodsDesc.id;
     }
-    this.getOrderPage(params);
+
+    this.getOrderPage();
   }
 
   initMachineList() {
@@ -111,6 +108,6 @@ export class GoodsOrderTableComponent implements OnInit {
       if (res.code == 1000) {
         this.goodsDescList = <Array<GoodsDescription>>res.data;
       }
-    })
+    });
   }
 }

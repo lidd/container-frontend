@@ -65,4 +65,8 @@ export class UserService {
   getUserByNameLike(name: string): Observable<BaseResponse> {
     return this.http.get<BaseResponse>(Urls.user_name_like_query, {params: {name: name}});
   }
+
+  deleteUser(id: any) {
+    return this.http.post<BaseResponse>(Urls.user_delete, null, {params: {id: id}});
+  }
 }

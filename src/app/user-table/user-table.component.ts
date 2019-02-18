@@ -24,7 +24,7 @@ export class UserTableComponent implements OnInit {
   constructor(private userService: UserService, private roleService: RoleService,
               private nzModalService: NzModalService, private nzNotificationService: NzNotificationService,
               private globalMap: GlobalMapService, private refreshEmitter: RefreshEmitterService,
-              private merchantService: MerchantService) {
+              private merchantService: MerchantService, private notification: NzNotificationService) {
   }
 
   userList = [];
@@ -202,6 +202,17 @@ export class UserTableComponent implements OnInit {
       }
       if (e.name == Cmd.refresh_user_table) {
         this.loadUserList();
+      }
+    });
+  }
+
+  deleteUser(id: any) {
+    this.userService.deleteUser(id).subscribe(res => {
+      if (res.code == 1000) {
+        this.notification.success('成功', '操作成功！');
+        this.loadUserList();
+      } else {
+        this.notification.error('错误', `${res.code}: ${res.msg}`);
       }
     });
   }

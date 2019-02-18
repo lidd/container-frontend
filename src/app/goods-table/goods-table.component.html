@@ -59,7 +59,6 @@
     <th>批次</th>
     <th>状态</th>
     <th>机柜名</th>
-    <th>配送员</th>
   </tr>
   </thead>
   <tbody>
@@ -84,11 +83,11 @@
       <span *ngSwitchDefault>未知</span>
     </td>
     <td>{{goods.vendingMachine.location}} {{goods.vendingMachine.serial}}</td>
-    <td>
-      <span *ngIf="goods.deliveryman">
-              {{goods.deliveryman.name}}
-      </span>
-    </td>
+    <!--<td>-->
+      <!--<span *ngIf="goods.deliveryman">-->
+              <!--{{goods.deliveryman.name}}-->
+      <!--</span>-->
+    <!--</td>-->
   </tr>
   </tbody>
 </nz-table>

@@ -10,7 +10,7 @@
           [nzTotal]="totalElements" (nzPageIndexChange)="pageIndexChange()" [nzScroll]="{ x:'1300px'}">
   <thead>
   <tr>
-    <th [nzWidth]="'100px'" [nzLeft]="'0px'">机柜号</th>
+    <th [nzWidth]="'100px'" [nzLeft]="'0px'">机柜名</th>
     <th [nzWidth]="'100px'" [nzLeft]="'100px'">批次号</th>
     <th *ngFor="let d of goodsDescList">
       {{d.description}}
@@ -62,7 +62,7 @@
           <nz-option *ngFor="let o of userList" [nzValue]="o.name" [nzLabel]="o.name"></nz-option>
         </nz-select>
       </td>
-      <td>机柜：</td>
+      <td>机柜名：</td>
       <td>
         <nz-select style="width: 120px" [(ngModel)]="sheetToEdit.machineLocation">
           <nz-option *ngFor="let o of machineList" [nzValue]="o.location" [nzLabel]="o.location"></nz-option>

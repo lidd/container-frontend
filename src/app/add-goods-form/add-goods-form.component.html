@@ -28,7 +28,7 @@
       <nz-tag [nzColor]="'#f50'">数量保存后无法修改</nz-tag>
     </nz-form-control>
   </nz-form-item>
-
+  <nz-alert *ngIf="overflow" [nzType]="'error'" [nzMessage]="'机柜装不下了~~'"></nz-alert>
   <nz-form-item *ngIf="checkedGoods.length != 0">
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
       <button nz-button (click)="resetForm($event)">重置</button>

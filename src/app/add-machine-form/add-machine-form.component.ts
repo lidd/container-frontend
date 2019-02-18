@@ -12,6 +12,7 @@ import {Merchant} from '../model/Merchant';
 import {RefreshEmitterService} from '../shared/refresh-emitter.service';
 import {Cmd} from '../model/Cmd';
 import {VendingMachineService} from '../shared/vending-machine.service';
+import {MerchantService} from '../shared/merchant.service';
 
 @Component({
   selector: 'app-add-machine-form',
@@ -21,7 +22,7 @@ import {VendingMachineService} from '../shared/vending-machine.service';
 export class AddMachineFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private userService: UserService,
-              private notification: NzNotificationService, private http: HttpClient,
+              private notification: NzNotificationService, private http: HttpClient,private merchantService:MerchantService,
               private machineService: VendingMachineService, private refreshEmitter: RefreshEmitterService) {
     this.validateForm = this.fb.group({
       serial: ['', [Validators.required]],
@@ -42,8 +43,7 @@ export class AddMachineFormComponent implements OnInit {
   searchMerchantChange$ = new BehaviorSubject('');
 
   ngOnInit() {
-    this.users$ = this.configSearchUserChange$();
-    this.merchant$ = this.configSearchMerchantChange$();
+    this.initAllMerchants();
   }
 
   submitForm = ($event, value) => {
@@ -112,5 +112,13 @@ export class AddMachineFormComponent implements OnInit {
         this.notification.error('错误', `${res.code}: ${res.msg}`);
       }
     });
+  }
+
+  initAllMerchants(){
+    this.merchantService.getMerchantList().subscribe(res =>{
+      if (res.code == 1000) {
+        this.merchants = <Array<Merchant>>res.data;
+      }
+    })
   }
 }

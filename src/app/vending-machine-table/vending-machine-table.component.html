@@ -7,12 +7,11 @@
   <thead>
   <tr>
     <th>序号</th>
-    <th>地点</th>
+    <th>机柜名</th>
     <th>温度</th>
     <th>湿度</th>
     <th>状态</th>
     <th>总仓位</th>
-    <th>保质期</th>
     <th *ngIf="isAdmin">操作</th>
   </tr>
   </thead>
@@ -43,9 +42,6 @@
     </td>
     <td>
       {{machine.capacity}}
-    </td>
-    <td>
-      {{machine.exp}}
     </td>
     <td *ngIf="isAdmin">
       <a (click)="editMachine(machine)">编辑</a>

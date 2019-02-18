@@ -34,6 +34,8 @@ export class AddGoodsFormComponent implements OnInit {
 
   totalAmount: number = 0;
 
+  overflow: boolean = false;
+
   constructor(private fb: FormBuilder, private goodsService: GoodsService,
               private notification: NzNotificationService, private refreshEmitter: RefreshEmitterService,
               private userService: UserService, private machineService: VendingMachineService
@@ -99,6 +101,9 @@ export class AddGoodsFormComponent implements OnInit {
   }
 
   submit($event, value) {
+    if (this.totalAmount > this.checkedMachine.capacity) {
+      return;
+    }
     if (this.checkedGoods.length == 0) {
       return;
     }
@@ -144,6 +149,7 @@ export class AddGoodsFormComponent implements OnInit {
       }
       this.totalAmount += value[name];
     }
+    this.overflow = this.totalAmount > this.checkedMachine.capacity;
   }
 
   updateCheckMachine(value) {

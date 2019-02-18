@@ -32,8 +32,8 @@
     </tr>
   </table>
 </div>
-<nz-table [nzData]="goodsOrderList" [(nzPageIndex)]="pageIndex" [nzFrontPagination]="false" [nzBordered]="true"
-          [nzPageSize]="pageSize"
+<nz-table [nzData]="goodsOrderList" [(nzPageIndex)]="params.page" [nzFrontPagination]="false" [nzBordered]="true"
+          [nzPageSize]="params.size"
           [nzTotal]="totalElements" (nzPageIndexChange)="pageIndexChange()">
   <thead>
   <tr>
