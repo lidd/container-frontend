@@ -19,7 +19,7 @@
     <td>
       {{goodsDesc.description}}
     </td>
-    <td>{{goodsDesc.merchant.name}}</td>
+    <td><span *ngIf="goodsDesc.merchant">{{goodsDesc.merchant.name}}</span></td>
     <td>{{goodsDesc.price * 0.01|number:'1.1-1'}}</td>
     <td>
       <a (click)="showFullImg(goodsDesc)">查看图片</a>

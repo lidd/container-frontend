@@ -103,6 +103,7 @@ export class AddGoodsDescFormComponent implements OnInit {
     formData.append('description', value.description);
     formData.append('price', (value.price * 100).toString());
     formData.append('id', this.elementToEdit.id);
+    formData.append('barcode',value.barcode);
     this.goodsService.saveGoodsDesc(formData).subscribe(res => {
       if (res.code == 1000) {
         this.notification.success('成功', '更新成功');
