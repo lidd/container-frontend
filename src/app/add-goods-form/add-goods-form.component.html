@@ -18,7 +18,7 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="7" [nzRequired]="true">选择机柜</nz-form-label>
     <nz-select (ngModelChange)="updateCheckMachine(validateForm.value)" [formControlName]="'machineId'" style="width: 120px;" [nzPlaceHolder]="'请选择'">
-      <nz-option *ngFor="let o of machineList" [nzValue]="o.id" [nzLabel]="o.serial"></nz-option>
+      <nz-option *ngFor="let o of machineList" [nzValue]="o.id" [nzLabel]="o.location"></nz-option>
     </nz-select>
   </nz-form-item>
   <nz-form-item *ngFor="let o of checkedGoods">
