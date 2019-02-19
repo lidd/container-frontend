@@ -11,7 +11,9 @@
     <th>温度</th>
     <th>湿度</th>
     <th>状态</th>
+    <th>商户</th>
     <th>总仓位</th>
+    <th>更新时间</th>
     <th *ngIf="isAdmin">操作</th>
   </tr>
   </thead>
@@ -40,9 +42,11 @@
         故障({{machine.errorCode}})
       </div>
     </td>
+    <td><span *ngIf="machine.merchant">{{machine.merchant.name}}</span></td>
     <td>
       {{machine.capacity}}
     </td>
+    <td>{{machine.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
     <td *ngIf="isAdmin">
       <a (click)="editMachine(machine)">编辑</a>
       <nz-divider [nzType]="'vertical'"></nz-divider>
